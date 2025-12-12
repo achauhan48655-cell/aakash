@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Akash — Portfolio</title>
+
+<!-- Google Fonts (allowed external) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#05060a;
+    --accent-1: #7dd3fc; /* glacier cyan */
+    --accent-2: #b388ff; /* pale violet */
+    --glass: rgba(255,255,255,0.04);
+    --soft-white: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.35);
+    --card: rgba(255,255,255,0.03);
+    --shadow-strong: 0 20px 40px rgba(2,6,23,0.85);
+  }
+
+  /* Reset */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body,#app{height:100%}
+  body{
+    background:linear-gradient(180deg,#04050a 0%, #071124 50%, #05060a 100%);
+    color:var(--soft-white);
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow:hidden;
+  }
+
+  /* Canvas background fills */
+  #bgCanvas{
+    position:fixed; inset:0; width:100%; height:100%; z-index:0;
+    display:block;
+  }
+
+  /* Main app container */
+  .wrap{
+    position:relative; z-index:5; height:100vh; width:100%;
+    display:grid; grid-template-rows:auto 1fr auto;
+    pointer-events:none; /* let clicks pass to visible interactive elements only */
+  }
+
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:22px 36px;
+    pointer-events:auto;
+  }
+
+  .logo{
+    display:flex; align-items:center; gap:14px;
+  }
+
+  /* Big name with shadow effect (requested "shadow name Akash") */
+  .brand{
+    font-family:Orbitron,Inter, sans-serif;
+    font-weight:800;
+    font-size:32px;
+    letter-spacing:1px;
+    color:var(--soft-white);
+    position:relative;
+    text-transform:uppercase;
+    line-height:1;
+    transform:translateZ(0);
+  }
+
+  /* layered neon shadow for Akash */
+  .brand::after{
+    content:"Akash";
+    position:absolute; left:4px; top:6px;
+    z-index:-1;
+    color:transparent;
+    -webkit-text-stroke:1px rgba(125,211,252,0.35);
+    filter:blur(6px);
+    mix-blend-mode:screen;
+  }
+  .brand::before{
+    content:"Akash";
+    position:absolute; left:0; top:0;
+    z-index:-2;
+    color:transparent;
+    -webkit-text-stroke:2px rgba(179,136,255,0.18);
+    transform:translateY(10px) scaleY(0.98);
+    opacity:0.85;
+    filter:blur(14px);
+    mix-blend-mode:screen;
+  }
+
+  nav{display:flex; gap:10px; align-items:center}
+
+  .nav-btn{
+    pointer-events:auto;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.06);
+    padding:10px 16px;
+    border-radius:12px;
+    color:var(--soft-white);
+    font-weight:600;
+    cursor:pointer;
+    box-shadow: 0 6px 18px rgba(2,10,30,0.6), 0 0 18px rgba(125,211,252,0.03) inset;
+    transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+  }
+  .nav-btn:hover{ transform:translateY(-4px) scale(1.02);
+    box-shadow: 0 22px 44px rgba(2,6,23,0.8), 0 0 40px rgba(125,211,252,0.06);
+  }
+  .nav-btn.active{
+    background: linear-gradient(90deg, rgba(125,211,252,0.06), rgba(179,136,255,0.04));
+    border:1px solid rgba(125,211,252,0.18);
+    box-shadow: 0 28px 60px rgba(4,12,30,0.9), 0 0 36px rgba(125,211,252,0.12);
+    transform:translateY(-6px) scale(1.03);
+  }
+
+  /* Container for page sections (acts like pages) */
+  main{
+    display:grid; grid-template-columns:1fr; gap:20px; padding:32px;
+    align-items:center; justify-items:center;
+  }
+  .pages{
+    width:100%; max-width:1150px; height:calc(100vh - 220px);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:18px; padding:34px;
+    box-shadow: var(--shadow-strong), 0 1px 0 rgba(255,255,255,0.02) inset;
+    overflow:auto; pointer-events:auto;
+    backdrop-filter: blur(6px) saturate(120%);
+  }
+  section.page{
+    display:none;
+    height:100%;
+    animation:fadeIn .6s ease both;
+  }
+  section.page.active{ display:block; }
+
+  /* HOME page layout */
+  .home-grid{
+    width:100%; height:100%;
+    display:grid; grid-template-columns: 1fr 420px; gap:28px;
+    align-items:center;
+  }
+  .intro{
+    padding:16px 12px;
+  }
+  .eyebrow{
+    color:var(--muted); font-weight:600; letter-spacing:1px; font-size:13px;
+    margin-bottom:14px;
+  }
+  h1.title{
+    font-family:Orbitron,Inter; font-size:48px; margin-bottom:12px;
+    line-height:1.02;
+    text-shadow: 0 12px 36px rgba(2,10,30,0.8), 0 0 12px rgba(125,211,252,0.06);
+  }
+  p.lead{ color:var(--muted); font-size:16px; max-width:680px; margin-bottom:18px; }
+
+  .cta-row{ display:flex; gap:12px; align-items:center; margin-top:18px; }
+  .cta{
+    padding:12px 20px; border-radius:12px; font-weight:700;
+    cursor:pointer; border:1px solid rgba(255,255,255,0.06); background:transparent;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .cta.primary{
+    background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+    color:#08121a; box-shadow: 0 18px 48px rgba(125,211,252,0.08);
+  }
+  .cta.secondary{ color:var(--soft-white); border:1px solid rgba(255,255,255,0.06) }
+
+  /* Right panel card */
+  .profile-card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px; padding:18px; box-shadow: 0 20px 60px rgba(2,6,23,0.75);
+    display:flex; flex-direction:column; gap:14px; align-items:center;
+  }
+  .avatar{
+    width:160px; height:160px; border-radius:16px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#0b1220,#051322);
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 18px 40px rgba(2,6,23,0.8), 0 0 32px rgba(125,211,252,0.06);
+  }
+  .avatar svg{ width:110px; height:110px; opacity:0.95; filter:drop-shadow(0 8px 22px rgba(0,0,0,0.6)); }
+  .skill-pill{ font-size:13px; color:var(--muted); padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); background:var(--card) }
+
+  /* Projects grid */
+  .projects-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:8px; }
+  .project-card{
+    padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 10px 40px rgba(2,6,23,0.7);
+    transition:transform .28s, box-shadow .28s;
+    cursor:pointer;
+  }
+  .project-card:hover{ transform:translateY(-8px) scale(1.02); box-shadow: 0 30px 80px rgba(2,6,23,0.9); }
+
+  /* About layout */
+  .about-grid{ display:grid; grid-template-columns:1fr 380px; gap:22px; align-items:start }
+  .bio{ color:var(--muted); line-height:1.65; font-size:15px; }
+
+  /* Contact */
+  .contact-form{ display:flex; flex-direction:column; gap:10px; width:100%; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  input, textarea{
+    background:transparent; border:1px solid rgba(255,255,255,0.06);
+    padding:12px 14px; border-radius:10px; color:var(--soft-white); outline:none;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.6) inset;
+  }
+  textarea{ min-height:120px; resize:vertical; }
+
+  /* Footer */
+  footer{ display:flex; justify-content:space-between; align-items:center; padding:22px 36px; font-size:13px; color:var(--muted); pointer-events:auto; }
+
+  /* small screens */
+  @media(max-width:900px){
+    .home-grid, .about-grid{ grid-template-columns:1fr; }
+    .profile-card{ order:-1 }
+    .pages{ height:calc(100vh - 200px); padding:20px; }
+    .brand{ font-size:22px; }
+  }
+
+  /* Simple animations */
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+  .floaty{ animation:floaty 6s ease-in-out infinite; }
+  @keyframes floaty{ 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+
+  /* small helper */
+  .muted{ color:var(--muted); font-size:13px }
+  .tiny{ font-size:12px }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+<div id="app" class="wrap">
+  <header>
+    <div class="logo">
+      <div class="brand" aria-label="Akash portfolio">Akash</div>
+      <div class="muted tiny">Glacier • UI / Frontend</div>
+    </div>
+
+    <nav>
+      <button class="nav-btn active" data-page="home">Home</button>
+      <button class="nav-btn" data-page="about">About</button>
+      <button class="nav-btn" data-page="projects">Projects</button>
+      <button class="nav-btn" data-page="contact">Contact</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="pages" role="main" aria-live="polite">
+      <!-- HOME -->
+      <section class="page active" id="home">
+        <div class="home-grid">
+          <div class="intro">
+            <div class="eyebrow">Hello — I'm</div>
+            <h1 class="title">Akash — Design & Code</h1>
+            <p class="lead">I create premium front-end experiences with subtle motion, crisp shadows and a cool glacier aesthetic. I focus on interactive UI, animations and pixel-perfect layouts.</p>
+
+            <div class="cta-row">
+              <button class="cta primary" id="viewProjectsBtn">See Projects</button>
+              <button class="cta secondary" id="downloadCV">Download CV</button>
+            </div>
+
+            <div style="margin-top:26px">
+              <div class="muted tiny">Skills</div>
+              <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap">
+                <span class="skill-pill">HTML</span>
+                <span class="skill-pill">CSS / Animations</span>
+                <span class="skill-pill">JavaScript</span>
+                <span class="skill-pill">Three.js (basic)</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="profile-card floaty">
+            <div class="avatar" aria-hidden="true">
+              <!-- ice-like svg avatar -->
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#b388ff"/>
+                  </linearGradient>
+                </defs>
+                <rect x="6" y="12" width="88" height="76" rx="12" fill="url(#g1)" opacity="0.07"/>
+                <g opacity="0.95" transform="translate(18,12)">
+                  <path d="M32 48c9 0 16-7 16-16S41 16 32 16 16 23 16 32s7 16 16 16z" fill="#011526"/>
+                  <circle cx="32" cy="24" r="4" fill="#7dd3fc"/>
+                </g>
+              </svg>
+            </div>
+            <div style="text-align:center">
+              <div style="font-weight:700;font-size:18px">Akash</div>
+              <div class="muted tiny">Frontend Developer</div>
+            </div>
+            <div style="width:100%;display:flex;gap:8px;justify-content:center;margin-top:6px">
+              <div class="skill-pill">Visual Design</div>
+              <div class="skill-pill">Animations</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="page" id="about">
+        <div class="about-grid">
+          <div>
+            <h2 style="font-family:Orbitron,Inter;margin-bottom:8px">About Me</h2>
+            <p class="bio">I'm Akash — a frontend enthusiast who loves blending code with motion. I specialize in creating interfaces that feel alive using CSS, JavaScript and WebGL techniques. I believe details (soft shadows, micro-interactions and subtle parallax) make interfaces feel premium.</p>
+
+            <div style="margin-top:18px">
+              <h3 style="margin-bottom:8px">Experience</h3>
+              <div style="display:grid;gap:10px">
+                <div style="padding:12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,0.02)">
+                  <div style="font-weight:700">Front-end Developer</div>
+                  <div class="muted tiny">Freelance — 2022 — Present</div>
+                  <div class="muted tiny" style="margin-top:6px">Built interactive landing pages, animations, and prototype UI for multiple clients.</div>
+                </div>
+                <div style="padding:12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,0.02)">
+                  <div style="font-weight:700">UI / Motion Designer</div>
+                  <div class="muted tiny">Personal Projects</div>
+                  <div class="muted tiny" style="margin-top:6px">Experimenting with glacier themes, advanced CSS shadows and particle systems.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside style="padding:18px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);box-shadow:0 20px 60px rgba(2,6,23,0.7)">
+            <h4 style="margin-bottom:8px">Contact & Availability</h4>
+            <div class="muted tiny">Open to freelance and remote work. I reply quickly — let's make something cool.</div>
+            <div style="margin-top:12px">
+              <div class="muted tiny">Email</div>
+              <div style="font-weight:700">akash@example.com</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="page" id="projects">
+        <h2 style="font-family:Orbitron,Inter;margin-bottom:12px">Selected Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card" data-title="Glacier UI Kit">
+            <div style="font-weight:700">Glacier UI Kit</div>
+            <div class="muted tiny">A design system with icy tones, shadows & components.</div>
+          </div>
+          <div class="project-card" data-title="3D Clock">
+            <div style="font-weight:700">3D Digital Clock</div>
+            <div class="muted tiny">Animated circular 3D clock with depth and shadows.</div>
+          </div>
+          <div class="project-card" data-title="Portfolio v2">
+            <div style="font-weight:700">Portfolio V2</div>
+            <div class="muted tiny">Single-file responsive portfolio with motion and canvas effects.</div>
+          </div>
+          <div class="project-card" data-title="Interactive Map">
+            <div style="font-weight:700">Interactive Map</div>
+            <div class="muted tiny">Map UI with hover animations and smooth transitions.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="page" id="contact">
+        <h2 style="font-family:Orbitron,Inter;margin-bottom:12px">Get In Touch</h2>
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:18px">
+          <div>
+            <form id="contactForm" class="contact-form" onsubmit="return false;">
+              <div class="field">
+                <label class="muted tiny">Your name</label>
+                <input id="cname" required placeholder="Full name" />
+              </div>
+              <div class="field">
+                <label class="muted tiny">Email</label>
+                <input id="cemail" type="email" required placeholder="you@example.com" />
+              </div>
+              <div class="field">
+                <label class="muted tiny">Message</label>
+                <textarea id="cmessage" required placeholder="Hi Akash — I'd like to work with you on..."></textarea>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:6px">
+                <button class="cta primary" id="sendBtn">Send Message</button>
+                <button class="cta secondary" id="resetBtn" type="button">Reset</button>
+              </div>
+              <div id="formStatus" class="muted tiny" style="margin-top:8px"></div>
+            </form>
+          </div>
+
+          <aside style="padding:16px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,0.02); box-shadow: 0 18px 44px rgba(2,6,23,0.8)">
+            <div style="font-weight:700">Reach me</div>
+            <div class="muted tiny" style="margin-top:6px">Email: <span style="font-weight:600">akash@example.com</span></div>
+            <div class="muted tiny" style="margin-top:10px">Or send a message from the form — this demo won't actually send mail but validates input.</div>
+          </aside>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="muted tiny">© <span id="year"></span> Akash — Built with love and shadows</div>
+    <div class="muted tiny">Made with canvas snow • single file</div>
+  </footer>
+</div>
+
+<script>
+/* ------------------------------
+   Simple SPA navigation
+   ------------------------------ */
+(function(){
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const pages = document.querySelectorAll('.page');
+  const setActive = (name) => {
+    navBtns.forEach(b=>b.classList.toggle('active', b.dataset.page === name));
+    pages.forEach(p=>p.classList.toggle('active', p.id === name));
+  };
+  navBtns.forEach(b=>{
+    b.addEventListener('click', ()=> setActive(b.dataset.page));
+  });
+
+  // buttons linking
+  document.getElementById('viewProjectsBtn').addEventListener('click', ()=> setActive('projects'));
+  document.getElementById('downloadCV').addEventListener('click', ()=> {
+    // demo CV download (generate a tiny text file)
+    const blob = new Blob(["Akash — Frontend Developer\nEmail: akash@example.com\nSkills: HTML, CSS, JS, Motion Design"], {type:'text/plain'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Akash_CV.txt'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  // projects click show quick modal (simple alert for demo)
+  document.querySelectorAll('.project-card').forEach(card=>{
+    card.addEventListener('click', ()=> {
+      const t = card.dataset.title || 'Project';
+      // animated shadow pulse for clicked card
+      card.animate([{transform:'scale(1)'},{transform:'scale(1.03)'},{transform:'scale(1)'}], {duration:420, easing:'ease-out'});
+      setTimeout(()=> alert(t + "\\n\\nThis is a demo project preview. Replace with real links or modals."),120);
+    });
+  });
+
+  // small footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+})();
+
+/* ------------------------------
+   Contact form validation (no backend)
+   ------------------------------ */
+(function(){
+  const form = document.getElementById('contactForm');
+  const send = document.getElementById('sendBtn');
+  const reset = document.getElementById('resetBtn');
+  const status = document.getElementById('formStatus');
+
+  send.addEventListener('click', ()=> {
+    const name = document.getElementById('cname').value.trim();
+    const email = document.getElementById('cemail').value.trim();
+    const msg = document.getElementById('cmessage').value.trim();
+    if(!name || !email || !msg) {
+      status.textContent = 'Please fill every field.';
+      return;
+    }
+    // small animation to indicate send
+    send.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:420});
+    status.textContent = 'Message validated — (demo) ready to send.';
+    setTimeout(()=> status.textContent = 'Thanks! I will get back soon (demo).',1200);
+  });
+
+  reset.addEventListener('click', ()=> {
+    form.reset(); status.textContent = 'Form cleared.';
+  });
+})();
+
+/* ------------------------------
+   Canvas: Glacier snow / particle system
+   - black glacier look: dark background, blue-tinted snow with glow,
+   - ice shards rising occasionally
+   ------------------------------ */
+
+(function(){
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let w=0,h=0,ratio=1;
+
+  function resize(){
+    ratio = window.devicePixelRatio || 1;
+    w = canvas.width = Math.floor(window.innerWidth * ratio);
+    h = canvas.height = Math.floor(window.innerHeight * ratio);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(ratio,0,0,ratio,0,0);
+  }
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+
+  // particles
+  const particles = [];
+  const shardPool = [];
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  function createParticle(){
+    const p = {
+      x: rand(0,w/ratio),
+      y: rand(-20,h/ratio),
+      vx: rand(-0.25,0.25),
+      vy: rand(0.3,1.2),
+      r: rand(0.8,2.8),
+      life: rand(360,900),
+      hue: rand(185,210)
+    };
+    particles.push(p);
+  }
+
+  for(let i=0;i<160;i++) createParticle();
+
+  // ice shards (larger, slow drifting, bluish)
+  function createShard(){
+    const s = {
+      x: rand(0,w/ratio),
+      y: rand(-80, -20),
+      vx: rand(-0.2,0.2),
+      vy: rand(0.15,0.5),
+      ang: rand(0,Math.PI*2),
+      spin: rand(-0.008,0.008),
+      scale: rand(12,38),
+      alpha: rand(0.08,0.35),
+      hue: rand(185,210)
+    };
+    shardPool.push(s);
+  }
+  for(let i=0;i<8;i++) createShard();
+
+  // subtle aurora bands
+  function drawAurora(){
+    const g = ctx.createLinearGradient(0, h/ratio*0.18, w/ratio, h/ratio*0.55);
+    g.addColorStop(0, 'rgba(125,211,252,0.03)');
+    g.addColorStop(0.5, 'rgba(179,136,255,0.02)');
+    g.addColorStop(1, 'rgba(125,211,252,0.02)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = g;
+    ctx.fillRect(-50, h/ratio*0.12, w/ratio+100, h/ratio*0.5);
+    ctx.restore();
+  }
+
+  // main draw loop
+  let t=0;
+  function tick(){
+    t+=1;
+    ctx.clearRect(0,0,w/ratio,h/ratio);
+
+    // base vignette / glacier gradient
+    const base = ctx.createLinearGradient(0,0,0,h/ratio);
+    base.addColorStop(0,'#060713');
+    base.addColorStop(1,'#021521');
+    ctx.fillStyle = base;
+    ctx.fillRect(0,0,w/ratio,h/ratio);
+
+    // aurora / soft glow
+    drawAurora();
+
+    // draw shards
+    shardPool.forEach((s, i)=>{
+      s.x += s.vx;
+      s.y += s.vy;
+      s.ang += s.spin;
+      if(s.y > h/ratio + 60){ // recycle
+        s.x = rand(0,w/ratio);
+        s.y = rand(-120,-20);
+        s.vy = rand(0.08,0.5);
+      }
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(s.ang);
+      ctx.globalAlpha = s.alpha;
+      ctx.fillStyle = `rgba(${170},${220},${255},0.12)`;
+      // triangle-ish shard
+      ctx.beginPath();
+      ctx.moveTo(-s.scale*0.2, -s.scale*0.6);
+      ctx.lineTo(s.scale*0.7, 0);
+      ctx.lineTo(-s.scale*0.2, s.scale*0.6);
+      ctx.closePath();
+      ctx.fill();
+      // inner glow
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = 'rgba(125,211,252,0.06)';
+      ctx.fillStyle = `rgba(125,211,252,0.03)`;
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // draw particles (snow)
+    particles.forEach((p, idx)=>{
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life--;
+      if(p.y > h/ratio + 8 || p.life < 0){
+        // reset to top
+        p.x = rand(0,w/ratio);
+        p.y = rand(-40,-10);
+        p.vx = rand(-0.25,0.25);
+        p.vy = rand(0.3,1.2);
+        p.r = rand(0.8,2.8);
+        p.life = rand(360,900);
+      }
+      // layered glow: outer + inner
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,255,255,${0.09 + (p.r/6)})`;
+      ctx.shadowBlur = p.r*6;
+      ctx.shadowColor = `rgba(125,211,252,${0.12})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = `rgba(255,255,255,0.9)`;
+      ctx.arc(p.x, p.y, p.r*0.5, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    // subtle horizontal scanline / frost lines
+    if((t % 150) < 3){
+      ctx.save();
+      ctx.globalAlpha = 0.06;
+      ctx.fillStyle = 'rgba(255,255,255,0.02)';
+      for(let i=0;i<6;i++){
+        ctx.fillRect(rand(0,w/ratio), rand(0,h/ratio), rand(40,260), 1);
+      }
+      ctx.restore();
+    }
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+})();
+
+/* ------------------------------
+  Micro-interaction: keyboard navigation and accessibility
+  ------------------------------ */
+(function(){
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === '1') document.querySelector('.nav-btn[data-page="home"]').click();
+    if(e.key === '2') document.querySelector('.nav-btn[data-page="about"]').click();
+    if(e.key === '3') document.querySelector('.nav-btn[data-page="projects"]').click();
+    if(e.key === '4') document.querySelector('.nav-btn[data-page="contact"]').click();
+  });
+})();
+</script>
+</body>
+</html>
+
