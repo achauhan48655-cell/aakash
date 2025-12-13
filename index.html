@@ -2,1139 +2,1282 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Akash | Digital Portfolio</title>
+  <title>Jaspreet Singh | Digital Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <!-- Google Fonts (allowed) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg-main: #050816;
-      --bg-elevated: #0b1020;
-      --accent-blue: #14b8ff;
-      --accent-yellow: #ffd54f;
-      --accent-white: #f5f5f5;
-      --text-muted: #9ca3af;
-      --border-glow: 0 0 18px rgba(20, 184, 255, 0.7);
-      --transition-fast: 0.25s ease;
+      --bg: #050608;
+      --bg-alt: #0b0f16;
+      --card-bg: #11141c;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text: #f5f5f5;
+      --muted: #a0a0a0;
+      --accent-soft: #d3d3d3;   /* gray accent */
+      --accent-strong: #ffffff; /* white accent */
+      --accent-dark: #000000;   /* black accent elements */
+      --neon-glow: 0 0 18px rgba(255, 255, 255, 0.45);
       --radius-lg: 18px;
-      --radius-xl: 26px;
+      --radius-xl: 24px;
+      --transition-fast: 0.2s ease;
+      --transition-med: 0.4s ease;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
+      --nav-height: 70px;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    html {
       scroll-behavior: smooth;
     }
 
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #071425 0, #050816 45%, #020617 100%);
-      color: var(--accent-white);
+      background: radial-gradient(circle at top, #151821 0%, #050608 55%, #020308 100%);
+      color: var(--text);
       min-height: 100vh;
-      overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* Neon background accents */
-    .bg-glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
+    /* --- Global Layout --- */
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
     }
 
-    .bg-glow::before,
-    .bg-glow::after {
+    section {
+      padding: 4rem 0;
+      position: relative;
+    }
+
+    section::before {
       content: "";
       position: absolute;
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, rgba(20, 184, 255, 0.26), transparent 70%);
-      filter: blur(8px);
-      opacity: 0.7;
+      inset: 0;
+      opacity: 0.08;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 55%);
+      pointer-events: none;
+      mix-blend-mode: screen;
     }
 
-    .bg-glow::before {
-      top: -80px;
-      left: -40px;
+    .section-inner {
+      position: relative;
+      z-index: 1;
     }
 
-    .bg-glow::after {
-      bottom: -120px;
-      right: -40px;
-      background: radial-gradient(circle, rgba(255, 214, 79, 0.22), transparent 70%);
+    .section-title {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 0.75rem;
     }
 
-    /* Navbar */
+    .section-subtitle {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    /* --- Nav --- */
     header {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
       backdrop-filter: blur(18px);
-      background: linear-gradient(to right, rgba(5, 8, 22, 0.94), rgba(5, 8, 22, 0.88));
-      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      background: linear-gradient(to bottom, rgba(5, 6, 8, 0.92), rgba(5, 6, 8, 0.75), transparent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .nav-container {
-      max-width: 1120px;
+    .nav {
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 0.75rem 1.25rem;
+      padding: 0.5rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.25rem;
+      height: var(--nav-height);
     }
 
-    .brand {
+    .nav-left {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
     }
 
-    .brand-logo {
+    .logo-mark {
       width: 34px;
       height: 34px;
-      border-radius: 999px;
-      background: radial-gradient(circle, var(--accent-blue), #0f172a);
+      border-radius: 40%;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: var(--neon-glow);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      box-shadow: var(--border-glow);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
     }
 
-    .brand-text-main {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 1.05rem;
-      letter-spacing: 0.08em;
+    .logo-text-main {
+      font-weight: 500;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
+      font-size: 0.76rem;
+      color: var(--accent-strong);
     }
 
-    .brand-text-sub {
+    .logo-text-sub {
       font-size: 0.7rem;
-      color: var(--text-muted);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
     }
 
-    nav ul {
-      list-style: none;
+    .nav-links {
       display: flex;
-      gap: 1.25rem;
-      font-size: 0.92rem;
+      gap: 1.5rem;
+      align-items: center;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
     }
 
-    nav a {
-      text-decoration: none;
-      color: var(--text-muted);
+    .nav-links a {
       position: relative;
+      color: var(--muted);
+      text-decoration: none;
       padding-bottom: 0.25rem;
-      transition: color var(--transition-fast);
     }
 
-    nav a::after {
+    .nav-links a::after {
       content: "";
       position: absolute;
       left: 0;
       bottom: 0;
       width: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--accent-blue), var(--accent-yellow));
-      transition: width var(--transition-fast);
+      height: 1px;
+      background: var(--accent-strong);
+      box-shadow: var(--neon-glow);
+      transition: width var(--transition-med);
     }
 
-    nav a:hover {
-      color: var(--accent-white);
+    .nav-links a:hover {
+      color: var(--accent-strong);
     }
 
-    nav a:hover::after {
+    .nav-links a:hover::after {
       width: 100%;
     }
 
-    /* Layout */
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 1.75rem 1.25rem 3rem;
-    }
-
-    section {
-      padding: 4rem 0 2rem;
-      scroll-margin-top: 80px;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-family: "Orbitron", system-ui, sans-serif;
-    }
-
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      max-width: 620px;
-    }
-
-    /* Hero / Home */
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.18rem 0.75rem;
+    .nav-badge {
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: radial-gradient(circle at top left, rgba(20, 184, 255, 0.18), transparent 60%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.9rem;
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--accent-white);
-      margin-bottom: 0.9rem;
+      color: var(--accent-soft);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent 60%);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
     }
 
-    .badge-dot {
-      width: 6px;
-      height: 6px;
+    /* --- Hero / Home --- */
+    #home {
+      padding-top: 4.5rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 2.75rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.9rem;
       border-radius: 999px;
-      background: var(--accent-blue);
-      box-shadow: 0 0 12px rgba(20, 184, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+      box-shadow: var(--neon-glow);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-badge-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-strong);
+      box-shadow: var(--neon-glow);
+      background: radial-gradient(circle, #ffffff 0%, #cccccc 60%, #222222 100%);
     }
 
     .hero-title {
-      font-size: clamp(2.1rem, 5vw, 2.8rem);
-      font-weight: 600;
-      line-height: 1.15;
-      margin-bottom: 0.7rem;
-    }
-
-    .hero-title span {
-      background: linear-gradient(to right, var(--accent-blue), var(--accent-yellow));
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-text {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      max-width: 540px;
-      margin-bottom: 1.3rem;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
     }
 
     .hero-highlight {
-      font-size: 0.85rem;
-      color: var(--accent-white);
-      border-left: 3px solid var(--accent-blue);
-      padding-left: 0.75rem;
-      margin-bottom: 1.4rem;
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: var(--neon-glow);
+      font-size: 0.78rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      color: var(--accent-soft);
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      max-width: 36rem;
+      font-size: 0.95rem;
+      margin: 1rem 0 1.75rem;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.85rem;
+      gap: 0.9rem;
+      margin-bottom: 2rem;
     }
 
     .btn-primary,
     .btn-ghost {
       border-radius: 999px;
-      padding: 0.55rem 1.4rem;
-      font-size: 0.9rem;
+      padding: 0.7rem 1.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border: 1px solid rgba(255, 255, 255, 0.35);
       cursor: pointer;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+      transition: all var(--transition-med);
+      background: transparent;
+      color: var(--text);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
-      color: #020617;
-      font-weight: 600;
-      box-shadow: 0 12px 30px rgba(20, 184, 255, 0.3);
+      background: radial-gradient(circle at top, #ffffff, #d0d0d0 60%, #707070 100%);
+      color: #050608;
+      box-shadow: var(--neon-glow), var(--shadow-soft);
     }
 
     .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 40px rgba(20, 184, 255, 0.45);
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
     }
 
     .btn-ghost {
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.7);
-      color: var(--accent-white);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .btn-ghost:hover {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 18px rgba(20, 184, 255, 0.45);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: var(--neon-glow);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .hero-meta span {
+      padding-left: 0.9rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    /* Hero Right */
+    .hero-panel {
+      position: relative;
     }
 
     .hero-card {
-      border-radius: var(--radius-xl);
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.14), transparent 50%), radial-gradient(circle at bottom, rgba(255, 214, 79, 0.12), transparent 55%), #020617;
-      border: 1px solid rgba(148, 163, 184, 0.40);
-      padding: 1.6rem 1.3rem;
       position: relative;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent 50%),
+                  linear-gradient(145deg, #151821, #050608);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--shadow-soft);
+      padding: 1.8rem 1.5rem;
       overflow: hidden;
-      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9), var(--border-glow);
     }
 
-    .hero-card-orbit {
-      position: absolute;
-      inset: 14px;
-      border-radius: inherit;
-      border: 1px dashed rgba(148, 163, 184, 0.35);
-      opacity: 0.75;
-    }
-
-    .hero-card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .tag {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      padding: 0.23rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      backdrop-filter: blur(8px);
-      background: rgba(15, 23, 42, 0.8);
-      color: var(--accent-white);
-    }
-
-    .hero-metrics {
+    .hero-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.85rem;
-      font-size: 0.75rem;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.4rem;
     }
 
-    .metric {
-      padding: 0.75rem 0.7rem;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.85);
-    }
-
-    .metric-label {
-      color: var(--text-muted);
+    .hero-stat-title {
       font-size: 0.7rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .metric-value {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 1.05rem;
-    }
-
-    /* About Section */
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.2fr);
-      gap: 2rem;
-      margin-top: 1.75rem;
-    }
-
-    .about-card {
-      background: rgba(15, 23, 42, 0.95);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 1.4rem 1.3rem;
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.9);
-    }
-
-    .about-card h3 {
-      font-size: 1.02rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .about-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .about-list {
-      margin-top: 0.75rem;
-      font-size: 0.86rem;
-      color: var(--accent-white);
-    }
-
-    .about-list li {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
       margin-bottom: 0.45rem;
     }
 
-    .about-list span {
-      color: var(--accent-blue);
+    .hero-stat-main {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent-soft);
+      margin-bottom: 0.7rem;
     }
 
-    .timeline {
-      margin-top: 0.9rem;
-      border-left: 2px dashed rgba(148, 163, 184, 0.6);
-      padding-left: 0.85rem;
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.68rem;
     }
 
-    .timeline-item {
-      margin-bottom: 0.6rem;
+    .pill {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
     }
 
-    .timeline-title {
-      font-size: 0.85rem;
+    .hero-tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.8rem;
+      max-width: 13rem;
+    }
+
+    .hero-circle {
+      position: absolute;
+      right: -40px;
+      bottom: -40px;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow: 0 0 45px rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-circle-inner {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    /* --- About --- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 2.2rem;
+      align-items: flex-start;
+    }
+
+    .about-card {
+      background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 50%),
+                  linear-gradient(135deg, #151821, #080a0f);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .about-heading {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .about-text {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .about-text strong {
+      color: var(--accent-strong);
       font-weight: 500;
     }
 
-    .timeline-meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1.3rem;
     }
 
-    /* Projects Section */
+    .about-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--accent-soft);
+    }
+
+    .about-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.3rem;
+    }
+
+    .about-mini-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-lg);
+      padding: 0.9rem;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .about-mini-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+    }
+
+    .about-mini-value {
+      margin-top: 0.4rem;
+      color: var(--text);
+    }
+
+    .goal-list {
+      list-style: none;
+      margin-top: 0.7rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .goal-list li {
+      margin-bottom: 0.35rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .goal-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.45rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Projects --- */
+    .projects-intro {
+      max-width: 34rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 2.3rem;
+    }
+
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.4rem;
     }
 
     .project-card {
       position: relative;
-      padding: 1rem 1rem 0.95rem;
+      background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-lg);
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.16), transparent 60%), rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1rem;
       cursor: pointer;
+      transition: all var(--transition-med);
       overflow: hidden;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.24), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      mix-blend-mode: screen;
+      pointer-events: none;
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-blue);
-      box-shadow: 0 18px 40px rgba(20, 184, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-3px);
+      box-shadow: var(--neon-glow);
     }
 
-    .project-chip {
-      font-size: 0.65rem;
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-label {
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent-yellow);
+      letter-spacing: 0.16em;
+      color: var(--muted);
       margin-bottom: 0.4rem;
     }
 
     .project-title {
-      font-size: 1rem;
-      margin-bottom: 0.35rem;
+      font-size: 0.98rem;
+      margin-bottom: 0.3rem;
     }
 
-    .project-desc {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
+    .project-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
     }
 
-    .project-open {
-      display: inline-flex;
-      align-items: center;
+    .project-chip-row {
+      display: flex;
+      flex-wrap: wrap;
       gap: 0.35rem;
-      font-size: 0.8rem;
-      color: var(--accent-blue);
+      font-size: 0.7rem;
     }
 
-    .project-open span {
-      font-size: 1rem;
+    .project-chip {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--accent-soft);
     }
 
-    /* Modal */
+    .project-open-indicator {
+      margin-top: 0.75rem;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.85;
+    }
+
+    .project-open-indicator span {
+      width: 24px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Modal --- */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(2, 6, 23, 0.92);
-      backdrop-filter: blur(16px);
-      display: flex;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.08), rgba(0,0,0,0.95));
+      display: none;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-      z-index: 60;
+      padding: 1.5rem;
+      z-index: 200;
     }
 
-    .modal.show {
-      opacity: 1;
-      pointer-events: auto;
+    .modal.active {
+      display: flex;
     }
 
-    .modal-inner {
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.14), transparent 55%), rgba(15, 23, 42, 0.97);
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      max-width: 880px;
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(16px);
+      opacity: 0.92;
+    }
+
+    .modal-dialog {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
       width: 100%;
       max-height: 90vh;
-      padding: 1.25rem 1.25rem 1.4rem;
+      background: radial-gradient(circle at top, #161925, #050608);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9);
+      padding: 1.4rem 1.5rem 1.8rem;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 30px 80px rgba(2, 6, 23, 0.95), var(--border-glow);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.7rem;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 0.7rem;
+    }
+
+    .modal-titleblock {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
     }
 
     .modal-title {
-      font-size: 1.1rem;
-      font-family: "Orbitron", system-ui, sans-serif;
-      letter-spacing: 0.08em;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 1.05rem;
       text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .modal-subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
     }
 
     .modal-close {
-      border: none;
       border-radius: 999px;
-      width: 30px;
-      height: 30px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      height: 32px;
+      min-width: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.06);
       cursor: pointer;
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--accent-white);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      font-size: 1.1rem;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      padding: 0 0.9rem;
+      transition: all var(--transition-fast);
     }
 
     .modal-close:hover {
-      background: rgba(30, 64, 175, 0.95);
-      border-color: var(--accent-blue);
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: var(--neon-glow);
       transform: translateY(-1px);
-      box-shadow: 0 0 20px rgba(20, 184, 255, 0.65);
     }
 
     .modal-body {
       flex: 1;
-      margin-top: 0.4rem;
-      border-radius: 16px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      background: rgba(15, 23, 42, 0.96);
-      padding: 1rem;
       overflow: auto;
-      font-size: 0.9rem;
+      padding-top: 0.5rem;
     }
 
-    .project-app {
-      display: none;
-    }
-
-    .project-app.active {
-      display: block;
-    }
-
-    /* Tic Tac Toe */
-    .tictactoe-wrapper {
+    .modal-body-inner {
       display: grid;
-      grid-template-columns: minmax(0, 280px) minmax(0, 1.5fr);
-      gap: 1.5rem;
-      align-items: center;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 1.2rem;
+      align-items: flex-start;
     }
 
-    .tictactoe-board {
+    .project-description {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* --- TIC TAC TOE --- */
+    .ttt-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.35rem;
-      background: rgba(15, 23, 42, 0.9);
-      padding: 0.4rem;
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      gap: 0.25rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      max-width: 220px;
     }
 
-    .cell {
-      width: 80px;
-      height: 80px;
-      border-radius: 18px;
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.95);
+    .ttt-cell {
+      width: 70px;
+      height: 70px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 2rem;
+      font-size: 1.9rem;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      transition: background var(--transition-fast), transform var(--transition-fast);
     }
 
-    .cell:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent-blue);
-      box-shadow: 0 18px 30px rgba(20, 184, 255, 0.22);
-    }
-
-    .tictactoe-info {
-      font-size: 0.9rem;
-      color: var(--accent-white);
-    }
-
-    .status {
-      margin-bottom: 0.6rem;
-      color: var(--accent-yellow);
-      font-weight: 500;
-    }
-
-    .btn-sm {
-      padding: 0.35rem 0.9rem;
-      font-size: 0.78rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.96);
-      color: var(--accent-white);
-      cursor: pointer;
-      margin-top: 0.4rem;
-      transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
-    }
-
-    .btn-sm:hover {
-      border-color: var(--accent-blue);
-      background: rgba(30, 64, 175, 0.9);
+    .ttt-cell:hover {
+      background: rgba(255,255,255,0.07);
       transform: translateY(-1px);
-      box-shadow: 0 0 18px rgba(20, 184, 255, 0.6);
     }
 
-    /* Image Slider */
-    .slider {
-      max-width: 560px;
-      margin: 0 auto;
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.65);
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.97);
-      padding: 1rem;
+    .ttt-status {
+      font-size: 0.86rem;
+      margin-top: 0.8rem;
+      color: var(--accent-soft);
+    }
+
+    .ttt-reset-btn {
+      margin-top: 0.6rem;
+      font-size: 0.76rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .ttt-reset-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Image Slider --- */
+    .slider-container {
+      max-width: 320px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #000000;
     }
 
     .slider-window {
       position: relative;
       overflow: hidden;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: #020617;
-      height: 220px;
+      height: 190px;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
     }
 
     .slide {
-      position: absolute;
-      inset: 0;
+      min-width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.13em;
-      transform: translateX(100%);
-      opacity: 0;
-      transition: transform 0.45s ease, opacity 0.45s ease;
+      letter-spacing: 0.18em;
+      color: #ffffff;
     }
 
-    .slide.active {
-      transform: translateX(0);
-      opacity: 1;
+    .slide-1 {
+      background: linear-gradient(135deg, #000000, #444444);
     }
 
-    .slide.bg1 {
-      background: radial-gradient(circle at top left, rgba(20, 184, 255, 0.55), transparent 70%), radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.6), transparent 70%);
+    .slide-2 {
+      background: linear-gradient(135deg, #111111, #777777);
     }
 
-    .slide.bg2 {
-      background: radial-gradient(circle at top, rgba(255, 214, 79, 0.55), transparent 70%), radial-gradient(circle at bottom right, rgba(30, 64, 175, 0.6), transparent 70%);
-    }
-
-    .slide.bg3 {
-      background: radial-gradient(circle at top left, rgba(236, 72, 153, 0.55), transparent 70%), radial-gradient(circle at bottom, rgba(14, 165, 233, 0.6), transparent 70%);
-    }
-
-    .slide.bg4 {
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.6), transparent 70%), radial-gradient(circle at bottom left, rgba(251, 191, 36, 0.6), transparent 70%);
+    .slide-3 {
+      background: linear-gradient(135deg, #050505, #999999);
     }
 
     .slider-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 0.8rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
     }
 
-    .slider-buttons {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .btn-icon {
-      width: 34px;
-      height: 34px;
+    .slider-btn {
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: rgba(15, 23, 42, 0.98);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.32rem 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
       cursor: pointer;
-      font-size: 1rem;
-      color: var(--accent-white);
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      transition: all var(--transition-fast);
+      color: var(--accent-soft);
     }
 
-    .btn-icon:hover {
-      background: rgba(30, 64, 175, 0.9);
-      border-color: var(--accent-blue);
-      transform: translateY(-1px);
-      box-shadow: 0 0 20px rgba(20, 184, 255, 0.65);
+    .slider-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: var(--neon-glow);
     }
 
-    /* Calculator */
+    /* --- Calculator --- */
     .calculator {
-      max-width: 360px;
-      margin: 0 auto;
-      border-radius: 20px;
-      padding: 1rem;
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.97);
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      max-width: 260px;
+      border-radius: 18px;
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
     }
 
     .calc-display {
-      background: #020617;
-      border-radius: 14px;
-      padding: 0.7rem;
-      font-family: "Orbitron", system-ui, sans-serif;
+      padding: 0.8rem 0.9rem;
+      font-size: 1.3rem;
       text-align: right;
-      font-size: 1.4rem;
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      margin-bottom: 0.7rem;
-      min-height: 42px;
-      overflow: hidden;
-      white-space: nowrap;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(135deg, #111111, #333333);
+      min-height: 2.4rem;
     }
 
-    .calc-grid {
+    .calc-buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
+      gap: 0.3rem;
+      padding: 0.6rem;
     }
 
     .calc-btn {
-      border-radius: 999px;
-      padding: 0.55rem 0.45rem;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.95);
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.55rem 0.4rem;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+      transition: all var(--transition-fast);
+      text-align: center;
     }
 
     .calc-btn.operator {
-      color: var(--accent-yellow);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .calc-btn.equal {
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
-      color: #020617;
+      grid-column: span 2;
+      background: linear-gradient(135deg, #ffffff, #bdbdbd);
+      color: #050608;
       font-weight: 600;
-      border: none;
-      box-shadow: 0 12px 32px rgba(20, 184, 255, 0.35);
     }
 
     .calc-btn:hover {
-      border-color: var(--accent-blue);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: var(--neon-glow);
       transform: translateY(-1px);
-      box-shadow: 0 0 16px rgba(20, 184, 255, 0.65);
     }
 
-    /* Digital Clock */
-    .clock-card {
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 1.1rem 1.2rem;
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.97);
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.95);
-    }
-
-    .clock-label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 0.5rem;
+    /* --- Digital Clock --- */
+    .clock-wrapper {
+      max-width: 260px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: radial-gradient(circle at top, #222222, #050505);
+      padding: 1.1rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
     }
 
     .clock-time {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 2.3rem;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.1rem;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
     }
 
     .clock-date {
-      font-size: 0.85rem;
-      color: var(--accent-yellow);
-    }
-
-    /* Major Project */
-    .major-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2.4fr) minmax(0, 2fr);
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .major-tag {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent-yellow);
-      margin-bottom: 0.4rem;
     }
 
-    .major-title {
-      font-size: 1.3rem;
-      margin-bottom: 0.4rem;
+    /* --- Major Project (Task Manager example) --- */
+    .tasks-wrapper {
+      max-width: 360px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 1rem 1rem 1.1rem;
+      box-shadow: var(--shadow-soft);
     }
 
-    .major-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .tasks-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 0.6rem;
     }
 
-    .major-points {
+    .tasks-title {
       font-size: 0.85rem;
-      color: var(--accent-white);
-    }
-
-    .major-points li {
-      margin-bottom: 0.35rem;
-    }
-
-    .major-preview {
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      background: linear-gradient(135deg, rgba(20, 184, 255, 0.25), rgba(5, 150, 105, 0.25));
-      padding: 0.85rem;
-      position: relative;
-      overflow: hidden;
-      min-height: 220px;
-    }
-
-    .major-preview-inner {
-      position: absolute;
-      inset: 12px;
-      border-radius: 14px;
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(148, 163, 184, 0.65);
-      display: grid;
-      grid-template-rows: auto 1fr;
-      padding: 0.8rem;
-    }
-
-    .major-nav {
-      display: flex;
-      gap: 0.75rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .major-pill {
-      border-radius: 999px;
-      padding: 0.2rem 0.7rem;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-    }
-
-    .major-hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.35rem;
-    }
-
-    .major-hero-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .major-hero-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .major-hero-btn {
-      margin-top: 0.3rem;
-      align-self: flex-start;
-      border-radius: 999px;
-      border: none;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.78rem;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
-      color: #020617;
-      font-weight: 500;
-      box-shadow: 0 8px 20px rgba(20, 184, 255, 0.35);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-    }
-
-    .major-hero-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 30px rgba(20, 184, 255, 0.5);
-    }
-
-    /* Contact Section */
-    .contact-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 2.3fr) minmax(0, 2fr);
-      gap: 2rem;
-      margin-top: 1.8rem;
-    }
-
-    .contact-info-card,
-    .contact-form-card {
-      background: rgba(15, 23, 42, 0.97);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      padding: 1.4rem 1.3rem;
-      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.95);
-    }
-
-    .contact-label {
-      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      margin-bottom: 0.25rem;
+      letter-spacing: 0.18em;
+      color: var(--accent-soft);
     }
 
-    .contact-value {
-      font-size: 0.95rem;
-      color: var(--accent-white);
+    .tasks-counter {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .tasks-input-row {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .tasks-input-row input {
+      flex: 1;
+      padding: 0.45rem 0.6rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    .tasks-input-row button {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.16);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #050608;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .tasks-input-row button:hover {
+      box-shadow: var(--neon-glow);
+      background: #ffffff;
+    }
+
+    .tasks-list {
+      list-style: none;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+    }
+
+    .tasks-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      padding: 0.35rem 0.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex: 1;
+    }
+
+    .task-checkbox {
+      width: 15px;
+      height: 15px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .task-checkbox.checked {
+      background: #ffffff;
+    }
+
+    .task-checkbox.checked::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 2px;
+      background: #050608;
+    }
+
+    .task-text.completed {
+      text-decoration: line-through;
+      color: #666666;
+    }
+
+    .task-delete {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .task-delete:hover {
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Contact --- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 2.1rem;
+      align-items: flex-start;
+    }
+
+    .contact-card {
+      background: radial-gradient(circle at top, rgba(255,255,255,0.18), transparent 55%),
+                  linear-gradient(135deg, #151821, #050608);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-item {
+      font-size: 0.9rem;
+      color: var(--muted);
       margin-bottom: 0.8rem;
     }
 
-    .contact-highlight {
-      font-size: 0.85rem;
-      color: var(--accent-yellow);
-      margin-top: 0.6rem;
+    .contact-item span {
+      color: var(--accent-strong);
+      font-weight: 500;
     }
 
     form {
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .field {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      font-size: 0.85rem;
+      gap: 0.8rem;
+      margin-top: 1rem;
     }
 
     label {
-      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
     }
 
     input,
     textarea {
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.95);
-      padding: 0.55rem 0.9rem;
+      margin-top: 0.25rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.5rem 0.7rem;
       font-size: 0.85rem;
-      color: var(--accent-white);
+      color: var(--text);
       outline: none;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-      font-family: inherit;
-    }
-
-    textarea {
-      border-radius: 16px;
-      min-height: 90px;
       resize: vertical;
-      padding-top: 0.6rem;
+      min-height: 42px;
     }
 
     input:focus,
     textarea:focus {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 18px rgba(20, 184, 255, 0.6);
-      background: #020617;
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: var(--neon-glow);
     }
 
-    /* Footer */
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* --- Footer --- */
     footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.35);
-      padding: 1.1rem 1.25rem 1.5rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 1.2rem 1.5rem 2rem;
       text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
     }
 
-    .footer-inner {
-      max-width: 1120px;
-      margin: 0 auto;
+    footer span {
+      color: var(--accent-soft);
     }
 
-    .footer-inner span {
-      color: var(--accent-yellow);
-    }
-
-    /* Responsive */
+    /* --- Responsive --- */
     @media (max-width: 900px) {
       .hero,
       .about-grid,
-      .contact-layout,
-      .tictactoe-wrapper,
-      .major-grid {
+      .contact-grid,
+      .modal-body-inner {
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .hero-card {
+      .hero-panel {
         order: -1;
+      }
+
+      .modal-dialog {
+        max-height: 92vh;
       }
     }
 
-    @media (max-width: 700px) {
-      nav ul {
-        gap: 0.8rem;
-        font-size: 0.8rem;
+    @media (max-width: 720px) {
+      .nav {
+        padding-inline: 1.1rem;
       }
-      .nav-container {
-        padding-inline: 1rem;
+
+      .nav-links {
+        display: none;
       }
-      main {
-        padding-inline: 1rem;
+
+      .page {
+        padding-inline: 1.1rem;
       }
-      .cell {
-        width: 70px;
-        height: 70px;
+
+      .hero-card {
+        padding: 1.4rem 1.2rem;
       }
     }
 
     @media (max-width: 520px) {
-      .cell {
+      .ttt-cell {
         width: 60px;
         height: 60px;
       }
-      .modal-inner {
-        padding: 0.9rem;
+
+      .clock-time {
+        font-size: 1.6rem;
       }
-      .modal-body {
-        padding: 0.7rem;
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
-  <div class="bg-glow"></div>
-
   <!-- NAVBAR -->
   <header>
-    <div class="nav-container">
-      <div class="brand">
-        <div class="brand-logo">A</div>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo-mark">ak</div>
         <div>
-          <div class="brand-text-main">Akash</div>
-          <div class="brand-text-sub">Digital Portfolio</div>
+          <div class="logo-text-main">akash</div>
+          <div class="logo-text-sub">Portfolio</div>
         </div>
       </div>
-      <nav>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <div class="nav-badge">Exam&nbsp;Ready</div>
+      </div>
+    </nav>
   </header>
 
-  <!-- MAIN -->
-  <main>
+  <main class="page">
     <!-- HOME -->
-    <section id="home" class="hero">
-      <div>
-        <div class="badge">
-          <div class="badge-dot"></div>
-          Ready for the next big opportunity
-        </div>
-        <h1 class="hero-title">
-          Hi, I'm <span>Akash</span> — building, learning,<br />and innovating every single day.
-        </h1>
-        <p class="hero-text">
-          A focused and curious learner who enjoys mixing strong fundamentals with practical,
-          hands-on projects. This portfolio is a snapshot of how I think, build and grow as a
-          student and a developer.
-        </p>
-        <p class="hero-highlight">
-          Passionate about both <strong>academic excellence</strong> and
-          <strong>real-world problem solving</strong> — with clear goals in technology,
-          innovation and continuous improvement.
-        </p>
-        <div class="hero-actions">
-          <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
-            View My Projects
-          </button>
-          <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-            Contact Me
-          </button>
-        </div>
-      </div>
+    <section id="home">
+      <div class="section-inner hero">
+        <div>
+          <div class="hero-badge">
+            <div class="hero-badge-dot"></div>
+            Focused on Growth & Innovation
+          </div>
+          <h1 class="hero-title">
+            Digital Portfolio<br />
+            of Akash
+          </h1>
+          <div class="hero-highlight">Developer & Lifelong Learner</div>
+          <p class="hero-subtitle">
+            I am akash, a technology enthusiast who loves building clean, functional projects
+            and continuously improving my skills. This portfolio highlights my mini projects, major
+            project, and my commitment to both academics and practical work.
+          </p>
 
-      <div class="hero-card">
-        <div class="hero-card-orbit"></div>
-        <div class="hero-card-tags">
-          <span class="tag">Dedicated Student</span>
-          <span class="tag">Problem Solver</span>
-          <span class="tag">Neon UI Lover</span>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+              View Projects
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+              Contact Me
+            </button>
+          </div>
+
+          <div class="hero-meta">
+            <span>Passionate about Web & JavaScript</span>
+            <span>Strong focus on clean logic & UI</span>
+          </div>
         </div>
 
-        <div class="hero-metrics">
-          <div class="metric">
-            <div class="metric-label">Mini Projects</div>
-            <div class="metric-value">04+</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Major Project</div>
-            <div class="metric-value">01</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Focus Areas</div>
-            <div class="metric-value">Web • Logic</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Goal</div>
-            <div class="metric-value">Innovation</div>
+        <div class="hero-panel">
+          <div class="hero-card">
+            <div class="hero-grid">
+              <div>
+                <div class="hero-stat-title">Academic & Learning Focus</div>
+                <div class="hero-stat-main">
+                  Balancing theory with hands-on work
+                </div>
+                <p class="hero-tagline">
+                  I pay attention to concepts, structure, and writing maintainable code that can scale
+                  as I grow.
+                </p>
+              </div>
+              <div>
+                <div class="hero-stat-title">Core Tech Stack</div>
+                <div class="hero-pill-row">
+                  <span class="pill">HTML</span>
+                  <span class="pill">CSS</span>
+                  <span class="pill">JavaScript</span>
+                  <span class="pill">Responsive Design</span>
+                </div>
+                <p class="hero-tagline">
+                  Currently deepening my skills in front-end development and building strong fundamentals.
+                </p>
+              </div>
+            </div>
+
+            <div class="hero-circle">
+              <div class="hero-circle-inner">
+                Structured Learning<br />& Consistent Practice
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1142,70 +1285,73 @@
 
     <!-- ABOUT -->
     <section id="about">
-      <h2 class="section-title">About Me</h2>
-      <p class="section-subtitle">
-        A quick look at who I am, what drives me, and how I plan to grow in both academics
-        and technology.
-      </p>
+      <div class="section-inner">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">Profile · Passion · Goals</p>
 
-      <div class="about-grid">
-        <div class="about-card">
-          <h3>Who I Am</h3>
-          <p class="about-text">
-            <!-- TODO: update this paragraph with your real introduction -->
-            I am Akash, a student who believes that strong fundamentals, disciplined practice
-            and curiosity are the real superpowers. I enjoy understanding how things work from
-            the inside and then using that knowledge to create clean, practical solutions.
-          </p>
+        <div class="about-grid">
+          <div class="about-card">
+            <h3 class="about-heading">Who I Am</h3>
+            <p class="about-text">
+              My name is <strong>Akash</strong>. I am a student with a strong interest in
+              software development and digital solutions. I enjoy understanding how things work,
+              breaking down problems into smaller parts, and then turning ideas into working projects.
+            </p>
+            <br />
+            <p class="about-text">
+              I am <strong>serious about my studies</strong> and keep my fundamentals clear. At the
+              same time, I love experimenting with mini-projects like <strong>games, utilities,
+              and interactive UIs</strong> to apply what I learn in a practical way.
+            </p>
+            <br />
+            <p class="about-text">
+              My goal is to grow into a developer who can write clean, maintainable code, collaborate
+              with teams, and contribute to meaningful products.
+            </p>
 
-          <ul class="about-list">
-            <!-- TODO: adjust these bullet points to match your real passions -->
-            <li><span>•</span> Passionate about <strong>web development</strong> and building interactive UIs.</li>
-            <li><span>•</span> Equally focused on <strong>academic performance</strong> and conceptual clarity.</li>
-            <li><span>•</span> Love structuring my work with <strong>clean, readable, and maintainable code</strong>.</li>
-            <li><span>•</span> Always open to <strong>feedback</strong> and improving my projects step by step.</li>
-          </ul>
+            <div class="about-tags">
+              <span class="about-tag">Dedicated Learner</span>
+              <span class="about-tag">Problem Solver</span>
+              <span class="about-tag">Clean UI / UX</span>
+              <span class="about-tag">Growth Mindset</span>
+            </div>
+          </div>
 
-          <h3 style="margin-top: 1rem;">My Goals</h3>
-          <p class="about-text">
-            My short-term goal is to master modern web technologies and strengthen my problem-solving skills.
-            Long-term, I aim to contribute to meaningful projects that combine education, technology,
-            and real impact.
-          </p>
-        </div>
-
-        <div class="about-card">
-          <h3>Growth & Innovation Journey</h3>
-          <p class="about-text">
-            I treat every project as a chance to learn something new — from logic building in
-            games like Tic Tac Toe to interactive UI elements such as sliders, calculators and clocks.
-          </p>
-
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-title">Academic Excellence</div>
-              <div class="timeline-meta">
-                Staying consistent with my studies, focusing on understanding rather than memorizing.
+          <div>
+            <div class="about-mini-grid">
+              <div class="about-mini-card">
+                <div class="about-mini-label">Current Focus</div>
+                <div class="about-mini-value">
+                  Strengthening core concepts in web development and JavaScript through structured practice.
+                </div>
+              </div>
+              <div class="about-mini-card">
+                <div class="about-mini-label">Learning Style</div>
+                <div class="about-mini-value">
+                  Understand the theory → build a small project → refine and improve based on feedback.
+                </div>
+              </div>
+              <div class="about-mini-card">
+                <div class="about-mini-label">Values</div>
+                <div class="about-mini-value">
+                  Consistency, discipline, clean work, and respect for deadlines and quality.
+                </div>
+              </div>
+              <div class="about-mini-card">
+                <div class="about-mini-label">Strengths</div>
+                <div class="about-mini-value">
+                  Attention to detail, logical thinking, and a calm, focused approach to problem solving.
+                </div>
               </div>
             </div>
-            <div class="timeline-item">
-              <div class="timeline-title">Hands-on Practice</div>
-              <div class="timeline-meta">
-                Building small but complete projects that are fully functional and user-friendly.
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-title">Innovation Mindset</div>
-              <div class="timeline-meta">
-                Experimenting with UI, interactivity and experiences that feel premium and polished.
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-title">Future Vision</div>
-              <div class="timeline-meta">
-                To work on larger systems and platforms where my code creates real-world value.
-              </div>
-            </div>
+
+            <h3 class="about-heading" style="margin-top:1.6rem;">Goals for Growth & Innovation</h3>
+            <ul class="goal-list">
+              <li>Build more real-world style projects that combine design and logic.</li>
+              <li>Improve problem solving skills through regular coding practice.</li>
+              <li>Follow clean code practices and write readable, well-commented code.</li>
+              <li>Stay updated with modern front-end trends while keeping fundamentals strong.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -1213,74 +1359,92 @@
 
     <!-- PROJECTS -->
     <section id="projects">
-      <h2 class="section-title">Projects</h2>
-      <p class="section-subtitle">
-        Every project opens in a centered full-screen modal. Click to explore fully functional
-        mini apps and my major project.
-      </p>
+      <div class="section-inner">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Mini Projects · Major Project</p>
 
-      <div class="projects-grid">
-        <div class="project-card" data-project="tic-tac-toe">
-          <div class="project-chip">Mini Project</div>
-          <div class="project-title">Tic Tac Toe</div>
-          <div class="project-desc">
-            A classic game built with clean logic and clear winner detection — demonstrating
-            control flow, conditions and state management.
-          </div>
-          <div class="project-open">
-            Open Project <span>↗</span>
-          </div>
-        </div>
+        <p class="projects-intro">
+          All projects open in a separate full-screen dark modal when you click on them.
+          Each mini project is fully functional and demonstrates different aspects of my skills:
+          game logic, DOM manipulation, UI interactions, and time-based updates.
+        </p>
 
-        <div class="project-card" data-project="image-slider">
-          <div class="project-chip">Mini Project</div>
-          <div class="project-title">Neon Image Slider</div>
-          <div class="project-desc">
-            A smooth, fully functional slider that moves between different neon-themed panels
-            using JavaScript.
+        <div class="projects-grid">
+          <div class="project-card" data-modal-target="modal-ttt">
+            <div class="project-label">Mini Project</div>
+            <div class="project-title">Tic Tac Toe</div>
+            <div class="project-meta">
+              Two-player game with win/draw detection and reset functionality.
+            </div>
+            <div class="project-chip-row">
+              <span class="project-chip">Game Logic</span>
+              <span class="project-chip">DOM Events</span>
+            </div>
+            <div class="project-open-indicator">
+              <span></span> Open Project
+            </div>
           </div>
-          <div class="project-open">
-            Open Project <span>↗</span>
-          </div>
-        </div>
 
-        <div class="project-card" data-project="calculator">
-          <div class="project-chip">Mini Project</div>
-          <div class="project-title">Smart Calculator</div>
-          <div class="project-desc">
-            A basic but powerful calculator that handles operations and expressions using
-            JavaScript.
+          <div class="project-card" data-modal-target="modal-slider">
+            <div class="project-label">Mini Project</div>
+            <div class="project-title">Image Slider</div>
+            <div class="project-meta">
+              A simple slider switching between slides using JavaScript.
+            </div>
+            <div class="project-chip-row">
+              <span class="project-chip">Slider Logic</span>
+              <span class="project-chip">Transitions</span>
+            </div>
+            <div class="project-open-indicator">
+              <span></span> Open Project
+            </div>
           </div>
-          <div class="project-open">
-            Open Project <span>↗</span>
-          </div>
-        </div>
 
-        <div class="project-card" data-project="digital-clock">
-          <div class="project-chip">Mini Project</div>
-          <div class="project-title">Digital Clock</div>
-          <div class="project-desc">
-            A live, auto-updating digital clock displaying current time and date with a clean
-            neon layout.
+          <div class="project-card" data-modal-target="modal-calculator">
+            <div class="project-label">Mini Project</div>
+            <div class="project-title">Calculator</div>
+            <div class="project-meta">
+              Basic calculator supporting + − × ÷ with clear and equals.
+            </div>
+            <div class="project-chip-row">
+              <span class="project-chip">JS Evaluation</span>
+              <span class="project-chip">UI & Layout</span>
+            </div>
+            <div class="project-open-indicator">
+              <span></span> Open Project
+            </div>
           </div>
-          <div class="project-open">
-            Open Project <span>↗</span>
-          </div>
-        </div>
 
-        <div class="project-card" data-project="major-project">
-          <div class="project-chip">Major Project</div>
-          <div class="project-title">
-            <!-- TODO: replace with your real major project title -->
-            Gurukulam Hud & Nursery – Education Center Website
+          <div class="project-card" data-modal-target="modal-clock">
+            <div class="project-label">Mini Project</div>
+            <div class="project-title">Digital Clock</div>
+            <div class="project-meta">
+              Live clock that updates every second with formatted time and date.
+            </div>
+            <div class="project-chip-row">
+              <span class="project-chip">Real-Time</span>
+              <span class="project-chip">setInterval</span>
+            </div>
+            <div class="project-open-indicator">
+              <span></span> Open Project
+            </div>
           </div>
-          <div class="project-desc">
-            <!-- TODO: update this description to match your actual major project -->
-            A multi-page educational website concept focusing on courses, activities and a
-            clean experience for parents and students.
-          </div>
-          <div class="project-open">
-            Open Project <span>↗</span>
+
+          <div class="project-card" data-modal-target="modal-major">
+            <div class="project-label">Major Project</div>
+            <div class="project-title">Task Manager (Major Project Demo)</div>
+            <div class="project-meta">
+              A simple task manager where you can add, complete, and delete tasks.
+              This represents a bigger project with more logic and state management.
+            </div>
+            <div class="project-chip-row">
+              <span class="project-chip">State Management</span>
+              <span class="project-chip">User Interaction</span>
+              <span class="project-chip">Scalable Logic</span>
+            </div>
+            <div class="project-open-indicator">
+              <span></span> Open Project
+            </div>
           </div>
         </div>
       </div>
@@ -1288,52 +1452,56 @@
 
     <!-- CONTACT -->
     <section id="contact">
-      <h2 class="section-title">Contact</h2>
-      <p class="section-subtitle">
-        If you’d like to know more about my work, projects or journey, feel free to reach out.
-      </p>
+      <div class="section-inner">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">Email · Form</p>
 
-      <div class="contact-layout">
-        <div class="contact-info-card">
-          <div class="contact-label">Primary Email</div>
-          <div class="contact-value">
-            <!-- TODO: replace with your real email -->
-            akash.example@email.com
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 class="about-heading">Let’s Connect</h3>
+            <p class="contact-item">
+              <span>Email:</span> ak6426568@gmail.com
+            </p>
+            <p class="contact-item">
+              <span>Purpose:</span> Project discussions, feedback, opportunities, or any academic queries.
+            </p>
+            <p class="contact-note">
+              Use the form to send a quick message. On submit, a confirmation alert will appear
+              (in a real deployment this can be connected to a backend or email service).
+            </p>
+
+            <form id="contact-form">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your Name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="your@email.com" required />
+              </div>
+              <div>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" placeholder="Your message..." required></textarea>
+              </div>
+              <button type="submit" class="btn-primary" style="align-self:flex-start;margin-top:0.4rem;">
+                Submit Message
+              </button>
+            </form>
           </div>
 
-          <div class="contact-label">Availability</div>
-          <div class="contact-value">
-            Open for academic collaborations, project discussions and learning opportunities.
+          <div class="about-card">
+            <h3 class="about-heading">Why Reach Out?</h3>
+            <p class="about-text">
+              I am always open to <strong>feedback, collaboration, and new learning opportunities</strong>.
+              Whether it is about improving this portfolio, discussing a project idea, or exploring
+              internships, I am happy to connect.
+            </p>
+            <br />
+            <p class="about-text">
+              Communication and constructive feedback help me grow faster and keep me aligned with
+              real-world expectations.
+            </p>
           </div>
-
-          <div class="contact-label">What I Value</div>
-          <div class="contact-value">
-            Clear communication, honest feedback, and chances to build something meaningful.
-          </div>
-
-          <div class="contact-highlight">
-            Let’s build, learn and innovate together.
-          </div>
-        </div>
-
-        <div class="contact-form-card">
-          <form id="contactForm">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" type="text" placeholder="Enter your name" />
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" type="email" placeholder="Enter your email" />
-            </div>
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea id="message" placeholder="Write your message here"></textarea>
-            </div>
-            <button type="submit" class="btn-primary">
-              Submit Message
-            </button>
-          </form>
         </div>
       </div>
     </section>
@@ -1341,402 +1509,502 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-inner">
-      <div>© <span>Akash</span> • All rights reserved.</div>
-    </div>
+    <div>© <span>Jaspreet Singh</span>. All rights reserved.</div>
   </footer>
 
-  <!-- PROJECT MODAL -->
-  <div id="projectModal" class="modal">
-    <div class="modal-inner">
+  <!-- MODALS -->
+
+  <!-- Tic Tac Toe Modal -->
+  <div class="modal" id="modal-ttt">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog">
       <div class="modal-header">
-        <div class="modal-title" id="modalTitle">Project</div>
-        <button class="modal-close" id="modalClose" aria-label="Close project">✕</button>
+        <div class="modal-titleblock">
+          <div class="modal-title">Tic Tac Toe</div>
+          <div class="modal-subtitle">Two-player game with win / draw detection</div>
+        </div>
+        <button class="modal-close" data-modal-close>Close</button>
       </div>
       <div class="modal-body">
-        <!-- Tic Tac Toe -->
-        <div class="project-app" id="tic-tac-toe">
-          <div class="tictactoe-wrapper">
-            <div class="tictactoe-board" id="tictactoeBoard">
-              <div class="cell" data-cell-index="0"></div>
-              <div class="cell" data-cell-index="1"></div>
-              <div class="cell" data-cell-index="2"></div>
-              <div class="cell" data-cell-index="3"></div>
-              <div class="cell" data-cell-index="4"></div>
-              <div class="cell" data-cell-index="5"></div>
-              <div class="cell" data-cell-index="6"></div>
-              <div class="cell" data-cell-index="7"></div>
-              <div class="cell" data-cell-index="8"></div>
+        <div class="modal-body-inner">
+          <div>
+            <p class="project-description">
+              This mini project implements the classic Tic Tac Toe game. Players take turns placing
+              <strong>X</strong> and <strong>O</strong> on a 3×3 grid. The game detects wins,
+              draws, and provides a reset button.
+            </p>
+            <div class="ttt-grid" id="ttt-grid">
+              <div class="ttt-cell" data-index="0"></div>
+              <div class="ttt-cell" data-index="1"></div>
+              <div class="ttt-cell" data-index="2"></div>
+              <div class="ttt-cell" data-index="3"></div>
+              <div class="ttt-cell" data-index="4"></div>
+              <div class="ttt-cell" data-index="5"></div>
+              <div class="ttt-cell" data-index="6"></div>
+              <div class="ttt-cell" data-index="7"></div>
+              <div class="ttt-cell" data-index="8"></div>
             </div>
-            <div class="tictactoe-info">
-              <div class="status" id="tictactoeStatus">Current Player: X</div>
-              <p>
-                The goal is simple: get three in a row horizontally, vertically or diagonally.
-                This project shows how I handle game state, turn switching and winner checking.
-              </p>
-              <button class="btn-sm" id="tictactoeReset">Reset Game</button>
-            </div>
+            <div class="ttt-status" id="ttt-status">Current Player: X</div>
+            <button class="ttt-reset-btn" id="ttt-reset">Reset Game</button>
+          </div>
+          <div>
+            <p class="project-description">
+              <strong>Concepts demonstrated:</strong> arrays, condition checks, DOM updates,
+              click events, and maintaining game state.
+            </p>
           </div>
         </div>
-
-        <!-- Image Slider -->
-        <div class="project-app" id="image-slider">
-          <div class="slider">
-            <div class="slider-window">
-              <div class="slide bg1 active">Slide One</div>
-              <div class="slide bg2">Slide Two</div>
-              <div class="slide bg3">Slide Three</div>
-              <div class="slide bg4">Slide Four</div>
-            </div>
-            <div class="slider-controls">
-              <div>Use the arrows to slide through neon panels.</div>
-              <div class="slider-buttons">
-                <button class="btn-icon" id="prevSlide" aria-label="Previous slide">⟵</button>
-                <button class="btn-icon" id="nextSlide" aria-label="Next slide">⟶</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Calculator -->
-        <div class="project-app" id="calculator">
-          <div class="calculator">
-            <div class="calc-display" id="calcDisplay">0</div>
-            <div class="calc-grid">
-              <button class="calc-btn operator" data-calc="C">C</button>
-              <button class="calc-btn operator" data-calc="DEL">DEL</button>
-              <button class="calc-btn operator" data-calc="%">%</button>
-              <button class="calc-btn operator" data-calc="/">÷</button>
-
-              <button class="calc-btn" data-calc="7">7</button>
-              <button class="calc-btn" data-calc="8">8</button>
-              <button class="calc-btn" data-calc="9">9</button>
-              <button class="calc-btn operator" data-calc="*">×</button>
-
-              <button class="calc-btn" data-calc="4">4</button>
-              <button class="calc-btn" data-calc="5">5</button>
-              <button class="calc-btn" data-calc="6">6</button>
-              <button class="calc-btn operator" data-calc="-">−</button>
-
-              <button class="calc-btn" data-calc="1">1</button>
-              <button class="calc-btn" data-calc="2">2</button>
-              <button class="calc-btn" data-calc="3">3</button>
-              <button class="calc-btn operator" data-calc="+">+</button>
-
-              <button class="calc-btn" data-calc="0">0</button>
-              <button class="calc-btn" data-calc=".">.</button>
-              <button class="calc-btn equal" data-calc="=">=</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Digital Clock -->
-        <div class="project-app" id="digital-clock">
-          <div class="clock-card">
-            <div class="clock-label">Live Digital Clock</div>
-            <div class="clock-time" id="clockTime">--:--:--</div>
-            <div class="clock-date" id="clockDate">Loading current date...</div>
-          </div>
-        </div>
-
-        <!-- Major Project -->
-        <div class="project-app" id="major-project">
-          <div class="major-grid">
-            <div>
-              <div class="major-tag">Major Project</div>
-              <div class="major-title">
-                <!-- TODO: replace with your major project title -->
-                Gurukulam Hud & Nursery – Education Center Website
-              </div>
-              <div class="major-meta">
-                <!-- TODO: adjust this text to describe your tech stack and goals -->
-                Concept website focused on giving parents, students and teachers a clean and
-                informative digital experience.
-              </div>
-              <ul class="major-points">
-                <li>• Multi-section layout for introduction, activities and contact details.</li>
-                <li>• Focus on clarity, readability and student-friendly visuals.</li>
-                <li>• Designed with blue and yellow educational theme in mind.</li>
-                <li>• Shows my ability to structure a complete website from scratch.</li>
-              </ul>
-            </div>
-            <div class="major-preview">
-              <div class="major-preview-inner">
-                <div class="major-nav">
-                  <div class="major-pill">Home</div>
-                  <div class="major-pill">Activities</div>
-                  <div class="major-pill">Admissions</div>
-                  <div class="major-pill">Contact</div>
-                </div>
-                <div class="major-hero">
-                  <div class="major-hero-title">Learning that feels like home.</div>
-                  <div class="major-hero-sub">
-                    A calm, student-friendly interface to explore classes, events and school
-                    culture – all in one place.
-                  </div>
-                  <button class="major-hero-btn" type="button">
-                    Simulated Demo View
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End of project-apps -->
       </div>
     </div>
   </div>
 
+  <!-- Image Slider Modal -->
+  <div class="modal" id="modal-slider">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-titleblock">
+          <div class="modal-title">Image Slider</div>
+          <div class="modal-subtitle">Simple slide navigation with JavaScript</div>
+        </div>
+        <button class="modal-close" data-modal-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body-inner">
+          <div>
+            <p class="project-description">
+              This image slider cycles through three slides using “Previous” and “Next” buttons.
+              Each slide uses a different black-white-gray gradient to match the neon dark theme.
+            </p>
+            <div class="slider-container">
+              <div class="slider-window">
+                <div class="slider-track" id="slider-track">
+                  <div class="slide slide-1">Slide One</div>
+                  <div class="slide slide-2">Slide Two</div>
+                  <div class="slide slide-3">Slide Three</div>
+                </div>
+              </div>
+              <div class="slider-controls">
+                <button class="slider-btn" id="slider-prev">Prev</button>
+                <div id="slider-indicator">1 / 3</div>
+                <button class="slider-btn" id="slider-next">Next</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="project-description">
+              <strong>Concepts demonstrated:</strong> manipulating transform properties, controlling
+              active index, and updating a small UI indicator for the current slide.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calculator Modal -->
+  <div class="modal" id="modal-calculator">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-titleblock">
+          <div class="modal-title">Calculator</div>
+          <div class="modal-subtitle">Basic operations with clear and equals</div>
+        </div>
+        <button class="modal-close" data-modal-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body-inner">
+          <div>
+            <p class="project-description">
+              This calculator supports digits, basic operators (+ − × ÷), clear, delete,
+              and equals. Input is displayed at the top and evaluated safely using JavaScript.
+            </p>
+            <div class="calculator">
+              <div class="calc-display" id="calc-display">0</div>
+              <div class="calc-buttons">
+                <button class="calc-btn" data-calc="C">C</button>
+                <button class="calc-btn" data-calc="DEL">DEL</button>
+                <button class="calc-btn operator" data-calc="/">÷</button>
+                <button class="calc-btn operator" data-calc="*">×</button>
+                <button class="calc-btn" data-calc="7">7</button>
+                <button class="calc-btn" data-calc="8">8</button>
+                <button class="calc-btn" data-calc="9">9</button>
+                <button class="calc-btn operator" data-calc="-">−</button>
+                <button class="calc-btn" data-calc="4">4</button>
+                <button class="calc-btn" data-calc="5">5</button>
+                <button class="calc-btn" data-calc="6">6</button>
+                <button class="calc-btn operator" data-calc="+">+</button>
+                <button class="calc-btn" data-calc="1">1</button>
+                <button class="calc-btn" data-calc="2">2</button>
+                <button class="calc-btn" data-calc="3">3</button>
+                <button class="calc-btn equal" data-calc="=">=</button>
+                <button class="calc-btn" data-calc="0">0</button>
+                <button class="calc-btn" data-calc=".">.</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="project-description">
+              <strong>Concepts demonstrated:</strong> string operations, basic parsing,
+              button events, and careful handling of user input to perform calculations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Digital Clock Modal -->
+  <div class="modal" id="modal-clock">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-titleblock">
+          <div class="modal-title">Digital Clock</div>
+          <div class="modal-subtitle">Live updating clock with date</div>
+        </div>
+        <button class="modal-close" data-modal-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body-inner">
+          <div>
+            <p class="project-description">
+              This digital clock shows the current time (hours, minutes, seconds) and date.
+              It updates every second using <code>setInterval</code>.
+            </p>
+            <div class="clock-wrapper">
+              <div class="clock-time" id="clock-time">--:--:--</div>
+              <div class="clock-date" id="clock-date">Loading...</div>
+            </div>
+          </div>
+          <div>
+            <p class="project-description">
+              <strong>Concepts demonstrated:</strong> working with JavaScript
+              <code>Date</code>, intervals, formatting strings, and updating the DOM regularly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Major Project Modal -->
+  <div class="modal" id="modal-major">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-titleblock">
+          <div class="modal-title">Task Manager (Major Project)</div>
+          <div class="modal-subtitle">Add, complete, and delete tasks</div>
+        </div>
+        <button class="modal-close" data-modal-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body-inner">
+          <div>
+            <p class="project-description">
+              This demo major project is a <strong>Task Manager</strong>. It lets you add tasks,
+              mark them as completed, and remove them. This represents a bigger application with
+              state management and user interaction. You can rename and extend this to match
+              your actual major project details.
+            </p>
+            <div class="tasks-wrapper">
+              <div class="tasks-header">
+                <div class="tasks-title">Task Manager</div>
+                <div class="tasks-counter">
+                  <span id="tasks-count">0</span> tasks
+                </div>
+              </div>
+              <div class="tasks-input-row">
+                <input id="task-input" type="text" placeholder="Add a new task..." />
+                <button id="task-add-btn">Add</button>
+              </div>
+              <ul class="tasks-list" id="tasks-list">
+                <!-- tasks will appear here -->
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p class="project-description">
+              <strong>Concepts demonstrated:</strong> managing a list in memory, updating the DOM,
+              handling multiple event types, and keeping UI in sync with data.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
   <script>
-    // ---------- PROJECT MODAL ----------
-    const modal = document.getElementById("projectModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalClose = document.getElementById("modalClose");
+    // -------- MODAL MANAGEMENT --------
     const projectCards = document.querySelectorAll(".project-card");
-    const projectApps = document.querySelectorAll(".project-app");
+    const modals = document.querySelectorAll(".modal");
 
-    function openProject(projectId) {
-      projectApps.forEach((app) => app.classList.remove("active"));
-      const activeApp = document.getElementById(projectId);
-      if (activeApp) {
-        activeApp.classList.add("active");
-      }
-      // Set modal title
-      const card = Array.from(projectCards).find(
-        (c) => c.dataset.project === projectId
-      );
-      modalTitle.textContent = card
-        ? card.querySelector(".project-title").textContent
-        : "Project";
-      modal.classList.add("show");
-    }
-
-    function closeModal() {
-      modal.classList.remove("show");
-      projectApps.forEach((app) => app.classList.remove("active"));
-    }
-
-    projectCards.forEach((card) => {
+    projectCards.forEach(card => {
       card.addEventListener("click", () => {
-        const projectId = card.dataset.project;
-        openProject(projectId);
+        const targetId = card.getAttribute("data-modal-target");
+        const targetModal = document.getElementById(targetId);
+        if (targetModal) {
+          targetModal.classList.add("active");
+        }
       });
     });
 
-    modalClose.addEventListener("click", closeModal);
-
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        closeModal();
-      }
-    });
-
-    // ---------- TIC TAC TOE ----------
-    const tictactoeBoard = document.getElementById("tictactoeBoard");
-    const tictactoeStatus = document.getElementById("tictactoeStatus");
-    const tictactoeReset = document.getElementById("tictactoeReset");
-    let tictactoeState = Array(9).fill("");
-    let currentPlayer = "X";
-    let isGameActive = true;
-
-    const winningConditions = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    function updateStatus(message) {
-      tictactoeStatus.textContent = message;
-    }
-
-    function handleCellClick(event) {
-      const cell = event.target;
-      const cellIndex = cell.getAttribute("data-cell-index");
-
-      if (!isGameActive || tictactoeState[cellIndex] !== "") return;
-
-      tictactoeState[cellIndex] = currentPlayer;
-      cell.textContent = currentPlayer;
-
-      checkResult();
-    }
-
-    function checkResult() {
-      let roundWon = false;
-
-      for (let i = 0; i < winningConditions.length; i++) {
-        const [a, b, c] = winningConditions[i];
-        const valA = tictactoeState[a];
-        const valB = tictactoeState[b];
-        const valC = tictactoeState[c];
-
-        if (valA === "" || valB === "" || valC === "") {
-          continue;
+    // Close modal on backdrop or button click
+    modals.forEach(modal => {
+      modal.addEventListener("click", event => {
+        if (event.target.matches("[data-modal-close]") || event.target === modal.querySelector(".modal-backdrop")) {
+          modal.classList.remove("active");
         }
-        if (valA === valB && valB === valC) {
-          roundWon = true;
-          break;
-        }
-      }
-
-      if (roundWon) {
-        updateStatus(Winner: ${currentPlayer});
-        isGameActive = false;
-        return;
-      }
-
-      if (!tictactoeState.includes("")) {
-        updateStatus("It's a draw!");
-        isGameActive = false;
-        return;
-      }
-
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
-      updateStatus(Current Player: ${currentPlayer});
-    }
-
-    function resetGame() {
-      tictactoeState = Array(9).fill("");
-      currentPlayer = "X";
-      isGameActive = true;
-      document
-        .querySelectorAll("#tictactoeBoard .cell")
-        .forEach((cell) => (cell.textContent = ""));
-      updateStatus(Current Player: ${currentPlayer});
-    }
-
-    tictactoeBoard.addEventListener("click", (event) => {
-      if (event.target.classList.contains("cell")) {
-        handleCellClick(event);
-      }
-    });
-
-    tictactoeReset.addEventListener("click", resetGame);
-
-    // ---------- IMAGE SLIDER ----------
-    const slides = document.querySelectorAll(".slide");
-    const prevSlide = document.getElementById("prevSlide");
-    const nextSlide = document.getElementById("nextSlide");
-    let currentSlideIndex = 0;
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
       });
-    }
+    });
 
-    function next() {
-      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-      showSlide(currentSlideIndex);
-    }
+    // -------- TIC TAC TOE --------
+    (function () {
+      const cells = document.querySelectorAll(".ttt-cell");
+      const statusEl = document.getElementById("ttt-status");
+      const resetBtn = document.getElementById("ttt-reset");
 
-    function prev() {
-      currentSlideIndex =
-        (currentSlideIndex - 1 + slides.length) % slides.length;
-      showSlide(currentSlideIndex);
-    }
+      let board = Array(9).fill(null);
+      let currentPlayer = "X";
+      let gameOver = false;
 
-    nextSlide.addEventListener("click", next);
-    prevSlide.addEventListener("click", prev);
+      const winningCombos = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
 
-    // ---------- CALCULATOR ----------
-    const calcDisplay = document.getElementById("calcDisplay");
-    const calcButtons = document.querySelectorAll(".calc-btn");
-    let calcCurrent = "0";
+      function handleCellClick(event) {
+        const cell = event.target;
+        const index = parseInt(cell.getAttribute("data-index"), 10);
 
-    function updateCalcDisplay() {
-      calcDisplay.textContent = calcCurrent || "0";
-    }
+        if (board[index] || gameOver) return;
 
-    function handleCalcInput(value) {
-      if (value === "C") {
-        calcCurrent = "0";
-        updateCalcDisplay();
-        return;
+        board[index] = currentPlayer;
+        cell.textContent = currentPlayer;
+
+        if (checkWin(currentPlayer)) {
+          statusEl.textContent = Winner: ${currentPlayer};
+          gameOver = true;
+          return;
+        }
+
+        if (board.every(v => v !== null)) {
+          statusEl.textContent = "Game Over: Draw";
+          gameOver = true;
+          return;
+        }
+
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        statusEl.textContent = Current Player: ${currentPlayer};
       }
 
-      if (value === "DEL") {
-        calcCurrent = calcCurrent.slice(0, -1) || "0";
-        updateCalcDisplay();
-        return;
+      function checkWin(player) {
+        return winningCombos.some(combo => {
+          return combo.every(index => board[index] === player);
+        });
       }
 
-      if (value === "=") {
+      function resetGame() {
+        board = Array(9).fill(null);
+        currentPlayer = "X";
+        gameOver = false;
+        cells.forEach(cell => (cell.textContent = ""));
+        statusEl.textContent = "Current Player: X";
+      }
+
+      cells.forEach(cell => cell.addEventListener("click", handleCellClick));
+      resetBtn.addEventListener("click", resetGame);
+    })();
+
+    // -------- IMAGE SLIDER --------
+    (function () {
+      const track = document.getElementById("slider-track");
+      const prevBtn = document.getElementById("slider-prev");
+      const nextBtn = document.getElementById("slider-next");
+      const indicator = document.getElementById("slider-indicator");
+      const totalSlides = track ? track.children.length : 0;
+      let currentIndex = 0;
+
+      function updateSlider() {
+        if (!track) return;
+        const offset = -currentIndex * 100;
+        track.style.transform = translateX(${offset}%);
+        if (indicator) {
+          indicator.textContent = ${currentIndex + 1} / ${totalSlides};
+        }
+      }
+
+      if (prevBtn && nextBtn && track) {
+        prevBtn.addEventListener("click", () => {
+          currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+          updateSlider();
+        });
+
+        nextBtn.addEventListener("click", () => {
+          currentIndex = (currentIndex + 1) % totalSlides;
+          updateSlider();
+        });
+
+        updateSlider();
+      }
+    })();
+
+    // -------- CALCULATOR --------
+    (function () {
+      const display = document.getElementById("calc-display");
+      const buttons = document.querySelectorAll(".calc-btn");
+      let expression = "";
+
+      function updateDisplay() {
+        display.textContent = expression || "0";
+      }
+
+      function calculate() {
         try {
-          const expression = calcCurrent.replace(/÷/g, "/").replace(/×/g, "*");
-          const result = eval(expression); // Using eval carefully for this controlled calculator
-          calcCurrent = String(result);
+          // Replace any accidental multiple operators
+          const safeExp = expression.replace(/[^0-9+\-*/.]/g, "");
+          const result = Function("return " + safeExp)();
+          expression = result.toString();
         } catch (e) {
-          calcCurrent = "Error";
+          expression = "";
+          alert("Invalid expression");
         }
-        updateCalcDisplay();
-        return;
+        updateDisplay();
       }
 
-      if (calcCurrent === "0" && value !== ".") {
-        calcCurrent = value;
-      } else {
-        calcCurrent += value;
-      }
-      updateCalcDisplay();
-    }
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const value = btn.getAttribute("data-calc");
 
-    calcButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const value = btn.getAttribute("data-calc");
-        handleCalcInput(value);
+          if (value === "C") {
+            expression = "";
+          } else if (value === "DEL") {
+            expression = expression.slice(0, -1);
+          } else if (value === "=") {
+            if (expression.trim() !== "") {
+              calculate();
+              return;
+            }
+          } else {
+            expression += value;
+          }
+          updateDisplay();
+        });
       });
-    });
 
-    // ---------- DIGITAL CLOCK ----------
-    const clockTime = document.getElementById("clockTime");
-    const clockDate = document.getElementById("clockDate");
+      updateDisplay();
+    })();
 
-    function updateClock() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const seconds = String(now.getSeconds()).padStart(2, "0");
-      clockTime.textContent = ${hours}:${minutes}:${seconds};
+    // -------- DIGITAL CLOCK --------
+    (function () {
+      const timeEl = document.getElementById("clock-time");
+      const dateEl = document.getElementById("clock-date");
 
-      const options = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
-      clockDate.textContent = now.toLocaleDateString(undefined, options);
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // ---------- CONTACT FORM ----------
-    const contactForm = document.getElementById("contactForm");
-
-    contactForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-
-      if (!name || !email || !message) {
-        alert("Please fill in your name, email and message before submitting.");
-        return;
+      function pad(num) {
+        return num.toString().padStart(2, "0");
       }
 
-      alert(
-        Thank you, ${name}! Your message has been recorded. I will get back to you at ${email}.
-      );
-      contactForm.reset();
-    });
+      function updateClock() {
+        const now = new Date();
+        const hours = pad(now.getHours());
+        const minutes = pad(now.getMinutes());
+        const seconds = pad(now.getSeconds());
+        timeEl.textContent = ${hours}:${minutes}:${seconds};
 
-    // ---------- SMALL UX TOUCH: ESC KEY CLOSE ----------
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && modal.classList.contains("show")) {
-        closeModal();
+        const options = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
+        dateEl.textContent = now.toLocaleDateString(undefined, options);
       }
-    });
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    })();
+
+    // -------- TASK MANAGER (MAJOR PROJECT) --------
+    (function () {
+      const input = document.getElementById("task-input");
+      const addBtn = document.getElementById("task-add-btn");
+      const list = document.getElementById("tasks-list");
+      const countEl = document.getElementById("tasks-count");
+      let tasks = [];
+      let nextId = 1;
+
+      function renderTasks() {
+        list.innerHTML = "";
+        tasks.forEach(task => {
+          const li = document.createElement("li");
+
+          const left = document.createElement("div");
+          left.className = "task-left";
+
+          const checkbox = document.createElement("div");
+          checkbox.className = "task-checkbox" + (task.completed ? " checked" : "");
+          checkbox.addEventListener("click", () => toggleTask(task.id));
+
+          const text = document.createElement("div");
+          text.className = "task-text" + (task.completed ? " completed" : "");
+          text.textContent = task.text;
+
+          left.appendChild(checkbox);
+          left.appendChild(text);
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "task-delete";
+          delBtn.textContent = "Del";
+          delBtn.addEventListener("click", () => deleteTask(task.id));
+
+          li.appendChild(left);
+          li.appendChild(delBtn);
+          list.appendChild(li);
+        });
+        countEl.textContent = tasks.length.toString();
+      }
+
+      function addTask() {
+        const value = input.value.trim();
+        if (!value) return;
+        tasks.push({ id: nextId++, text: value, completed: false });
+        input.value = "";
+        renderTasks();
+      }
+
+      function toggleTask(id) {
+        tasks = tasks.map(task =>
+          task.id === id ? { ...task, completed: !task.completed } : task
+        );
+        renderTasks();
+      }
+
+      function deleteTask(id) {
+        tasks = tasks.filter(task => task.id !== id);
+        renderTasks();
+      }
+
+      addBtn.addEventListener("click", addTask);
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter") addTask();
+      });
+
+      renderTasks();
+    })();
+
+    // -------- CONTACT FORM ALERT --------
+    (function () {
+      const contactForm = document.getElementById("contact-form");
+      contactForm.addEventListener("submit", event => {
+        event.preventDefault();
+        alert("Thank you for your message! I will review it as soon as possible.");
+        contactForm.reset();
+      });
+    })();
   </script>
 </body>
 </html>
