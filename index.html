@@ -1,321 +1,1742 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Modern Premium Portfolio</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Akash | Digital Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Google Fonts -->
-<link href="c:\Users\akash kumar\OneDrive\Pictures\lamborghini black.jpg" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
 
-<style>
-/* ---------------- GLOBAL STYLE ---------------- */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
+  <style>
+    :root {
+      --bg-main: #050816;
+      --bg-elevated: #0b1020;
+      --accent-blue: #14b8ff;
+      --accent-yellow: #ffd54f;
+      --accent-white: #f5f5f5;
+      --text-muted: #9ca3af;
+      --border-glow: 0 0 18px rgba(20, 184, 255, 0.7);
+      --transition-fast: 0.25s ease;
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+    }
 
-body{
-  background:url("c:\Users\akash kumar\OneDrive\Pictures\lamborghini black.jpg");
-  background-size:cover;
-  background-attachment:fixed;
-  background-position:center;
-  color:#fff;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-/* Glass + Shadow Card */
-.section{
-  min-height:100vh;
-  padding:80px 10%;
-  backdrop-filter:blur(10px);
-  background:#000000e9;
-  margin:30px 0;
-  border-radius:20px;
-  box-shadow:0 0 30px rgba(0,255,255,0.6);
-  animation:fadeIn 1s ease;
-}
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #071425 0, #050816 45%, #020617 100%);
+      color: var(--accent-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(30px);}
-  to{opacity:1; transform:translateY(0);}
-}
+    /* Neon background accents */
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-/* ---------------- NAVIGATION ---------------- */
-nav{
-  width:100%;
-  position:fixed;
-  top:0;
-  left:0;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(10px);
-  padding:15px 10%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 0 25px cyan;
-  z-index:10;
-}
+    .bg-glow::before,
+    .bg-glow::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(20, 184, 255, 0.26), transparent 70%);
+      filter: blur(8px);
+      opacity: 0.7;
+    }
 
-nav h1{
-  font-size:25px;
-  font-weight:700;
-  color:#00eaff;
-  text-shadow:0 0 20px #00eaff;
-}
+    .bg-glow::before {
+      top: -80px;
+      left: -40px;
+    }
 
-nav ul{
-  display:flex;
-  gap:30px;
-}
+    .bg-glow::after {
+      bottom: -120px;
+      right: -40px;
+      background: radial-gradient(circle, rgba(255, 214, 79, 0.22), transparent 70%);
+    }
 
-nav ul li{
-  list-style:none;
-}
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to right, rgba(5, 8, 22, 0.94), rgba(5, 8, 22, 0.88));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
 
-nav ul li a{
-  text-decoration:none;
-  font-size:18px;
-  color:white;
-  transition:0.3s;
-}
+    .nav-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
 
-nav ul li a:hover{
-  color:#ff00ff;
-  text-shadow:0 0 10px #ff00ff;
-  transform:scale(1.1);
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
 
-/* ---------------- HOME PAGE ---------------- */
-.hero{
-  text-align:center;
-  padding-top:120px;
-}
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent-blue), #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: var(--border-glow);
+    }
 
-.hero h2{
-  font-size:60px;
-  color:#00eaff;
-  text-shadow:0 0 20px cyan;
-  animation:floating 3s infinite ease-in-out;
-}
+    .brand-text-main {
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
 
-@keyframes floating{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-20px);}
-  100%{transform:translateY(0);}
-}
+    .brand-text-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
 
-.hero p{
-  font-size:22px;
-  margin-top:10px;
-  color:#ffb3ff;
-  text-shadow:0 0 15px #ff00ff;
-}
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.92rem;
+    }
 
-/* 3D Rotating Box */
-.cube{
-  margin:80px auto;
-  width:160px;
-  height:160px;
-  transform-style:preserve-3d;
-  animation:rotateCube 6s linear infinite;
-}
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      position: relative;
+      padding-bottom: 0.25rem;
+      transition: color var(--transition-fast);
+    }
 
-@keyframes rotateCube{
-  0%{transform:rotateX(0deg) rotateY(0deg);}
-  100%{transform:rotateX(360deg) rotateY(360deg);}
-}
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent-blue), var(--accent-yellow));
+      transition: width var(--transition-fast);
+    }
 
-.cube div{
-  position:absolute;
-  width:160px;
-  height:160px;
-  background:linear-gradient(135deg,#00eaff,#ff00ff);
-  opacity:0.9;
-  border:3px solid #fff;
-  box-shadow:0 0 25px #00eaff;
-}
+    nav a:hover {
+      color: var(--accent-white);
+    }
 
-.front{transform:translateZ(80px);}
-.back{transform:rotateY(180deg) translateZ(80px);}
-.right{transform:rotateY(90deg) translateZ(80px);}
-.left{transform:rotateY(-90deg) translateZ(80px);}
-.top{transform:rotateX(90deg) translateZ(80px);}
-.bottom{transform:rotateX(-90deg) translateZ(80px);}
+    nav a:hover::after {
+      width: 100%;
+    }
 
-/* ---------------- ABOUT PAGE ---------------- */
-.about-content{
-  display:flex;
-  align-items:center;
-  gap:40px;
-  flex-wrap:wrap;
-  margin: 100;
-}
+    /* Layout */
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
 
-.about-content img{
-  width:300px;
-  height:300px;
-  border-radius:50px;
-  object-fit:cover;
-  box-shadow:0 0 30px magenta;
-}
+    section {
+      padding: 4rem 0 2rem;
+      scroll-margin-top: 80px;
+    }
 
-.about-content p{
-  font-size:20px;
-  line-height:30px;
-}
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: "Orbitron", system-ui, sans-serif;
+    }
 
-/* ---------------- PROJECTS ---------------- */
-.projects{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
-  margin: 40px; 
-}
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 620px;
+    }
 
-.project-card{
-  background:rgba(255,255,255,0.1);
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 0 25px #00eaff;
-  transition:0.4s;
-  margin:40px;
-}
+    /* Hero / Home */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
 
-.project-card:hover{
-  transform:translateY(-10px) scale(1.05);
-  box-shadow:0 0 35px #ff00ff;
-}
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.18rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top left, rgba(20, 184, 255, 0.18), transparent 60%);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-white);
+      margin-bottom: 0.9rem;
+    }
 
-.project-card h3{
-  color:#00eaff;
-}
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent-blue);
+      box-shadow: 0 0 12px rgba(20, 184, 255, 0.8);
+    }
 
-/* ---------------- CONTACT ---------------- */
-.contact form{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-  max-width:400px;
-}
+    .hero-title {
+      font-size: clamp(2.1rem, 5vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 0.7rem;
+    }
 
-input,textarea{
-  padding:15px;
-  border:none;
-  border-radius:10px;
-  outline:none;
-  font-size:16px;
-}
+    .hero-title span {
+      background: linear-gradient(to right, var(--accent-blue), var(--accent-yellow));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
 
-button{
-  padding:15px;
-  background:linear-gradient(90deg,#00eaff,#ff00ff);
-  border:none;
-  border-radius:10px;
-  color:#000;
-  font-weight:700;
-  cursor:pointer;
-  font-size:18px;
-  box-shadow:0 0 20px cyan;
-}
+    .hero-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 1.3rem;
+    }
 
-button:hover{
-  transform:scale(1.1);
-}
-</style>
+    .hero-highlight {
+      font-size: 0.85rem;
+      color: var(--accent-white);
+      border-left: 3px solid var(--accent-blue);
+      padding-left: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
+      color: #020617;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(20, 184, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(20, 184, 255, 0.45);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--accent-white);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 18px rgba(20, 184, 255, 0.45);
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.14), transparent 50%), radial-gradient(circle at bottom, rgba(255, 214, 79, 0.12), transparent 55%), #020617;
+      border: 1px solid rgba(148, 163, 184, 0.40);
+      padding: 1.6rem 1.3rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9), var(--border-glow);
+    }
+
+    .hero-card-orbit {
+      position: absolute;
+      inset: 14px;
+      border-radius: inherit;
+      border: 1px dashed rgba(148, 163, 184, 0.35);
+      opacity: 0.75;
+    }
+
+    .hero-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.23rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--accent-white);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      font-size: 0.75rem;
+    }
+
+    .metric {
+      padding: 0.75rem 0.7rem;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .metric-label {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-value {
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 1.05rem;
+    }
+
+    /* About Section */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.2fr);
+      gap: 2rem;
+      margin-top: 1.75rem;
+    }
+
+    .about-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 1.4rem 1.3rem;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .about-card h3 {
+      font-size: 1.02rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .about-list {
+      margin-top: 0.75rem;
+      font-size: 0.86rem;
+      color: var(--accent-white);
+    }
+
+    .about-list li {
+      margin-bottom: 0.45rem;
+    }
+
+    .about-list span {
+      color: var(--accent-blue);
+    }
+
+    .timeline {
+      margin-top: 0.9rem;
+      border-left: 2px dashed rgba(148, 163, 184, 0.6);
+      padding-left: 0.85rem;
+    }
+
+    .timeline-item {
+      margin-bottom: 0.6rem;
+    }
+
+    .timeline-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .timeline-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+    }
+
+    .project-card {
+      position: relative;
+      padding: 1rem 1rem 0.95rem;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.16), transparent 60%), rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.9);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 18px 40px rgba(20, 184, 255, 0.3);
+    }
+
+    .project-chip {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-yellow);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-title {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .project-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .project-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--accent-blue);
+    }
+
+    .project-open span {
+      font-size: 1rem;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.92);
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 60;
+    }
+
+    .modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-inner {
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.14), transparent 55%), rgba(15, 23, 42, 0.97);
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      max-width: 880px;
+      width: 100%;
+      max-height: 90vh;
+      padding: 1.25rem 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 80px rgba(2, 6, 23, 0.95), var(--border-glow);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.7rem;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-family: "Orbitron", system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .modal-close {
+      border: none;
+      border-radius: 999px;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--accent-white);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 1.1rem;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .modal-close:hover {
+      background: rgba(30, 64, 175, 0.95);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(20, 184, 255, 0.65);
+    }
+
+    .modal-body {
+      flex: 1;
+      margin-top: 0.4rem;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: rgba(15, 23, 42, 0.96);
+      padding: 1rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+
+    .project-app {
+      display: none;
+    }
+
+    .project-app.active {
+      display: block;
+    }
+
+    /* Tic Tac Toe */
+    .tictactoe-wrapper {
+      display: grid;
+      grid-template-columns: minmax(0, 280px) minmax(0, 1.5fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .tictactoe-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.35rem;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.4rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .cell {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .cell:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 18px 30px rgba(20, 184, 255, 0.22);
+    }
+
+    .tictactoe-info {
+      font-size: 0.9rem;
+      color: var(--accent-white);
+    }
+
+    .status {
+      margin-bottom: 0.6rem;
+      color: var(--accent-yellow);
+      font-weight: 500;
+    }
+
+    .btn-sm {
+      padding: 0.35rem 0.9rem;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--accent-white);
+      cursor: pointer;
+      margin-top: 0.4rem;
+      transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-sm:hover {
+      border-color: var(--accent-blue);
+      background: rgba(30, 64, 175, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(20, 184, 255, 0.6);
+    }
+
+    /* Image Slider */
+    .slider {
+      max-width: 560px;
+      margin: 0 auto;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.97);
+      padding: 1rem;
+    }
+
+    .slider-window {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #020617;
+      height: 220px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: transform 0.45s ease, opacity 0.45s ease;
+    }
+
+    .slide.active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .slide.bg1 {
+      background: radial-gradient(circle at top left, rgba(20, 184, 255, 0.55), transparent 70%), radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.6), transparent 70%);
+    }
+
+    .slide.bg2 {
+      background: radial-gradient(circle at top, rgba(255, 214, 79, 0.55), transparent 70%), radial-gradient(circle at bottom right, rgba(30, 64, 175, 0.6), transparent 70%);
+    }
+
+    .slide.bg3 {
+      background: radial-gradient(circle at top left, rgba(236, 72, 153, 0.55), transparent 70%), radial-gradient(circle at bottom, rgba(14, 165, 233, 0.6), transparent 70%);
+    }
+
+    .slide.bg4 {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.6), transparent 70%), radial-gradient(circle at bottom left, rgba(251, 191, 36, 0.6), transparent 70%);
+    }
+
+    .slider-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.8rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .slider-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.98);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--accent-white);
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-icon:hover {
+      background: rgba(30, 64, 175, 0.9);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(20, 184, 255, 0.65);
+    }
+
+    /* Calculator */
+    .calculator {
+      max-width: 360px;
+      margin: 0 auto;
+      border-radius: 20px;
+      padding: 1rem;
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.97);
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .calc-display {
+      background: #020617;
+      border-radius: 14px;
+      padding: 0.7rem;
+      font-family: "Orbitron", system-ui, sans-serif;
+      text-align: right;
+      font-size: 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      margin-bottom: 0.7rem;
+      min-height: 42px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .calc-btn {
+      border-radius: 999px;
+      padding: 0.55rem 0.45rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .calc-btn.operator {
+      color: var(--accent-yellow);
+    }
+
+    .calc-btn.equal {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
+      color: #020617;
+      font-weight: 600;
+      border: none;
+      box-shadow: 0 12px 32px rgba(20, 184, 255, 0.35);
+    }
+
+    .calc-btn:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+      box-shadow: 0 0 16px rgba(20, 184, 255, 0.65);
+    }
+
+    /* Digital Clock */
+    .clock-card {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 1.1rem 1.2rem;
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      background: radial-gradient(circle at top, rgba(20, 184, 255, 0.18), transparent 60%), rgba(15, 23, 42, 0.97);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.95);
+    }
+
+    .clock-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.5rem;
+    }
+
+    .clock-time {
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 2.3rem;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.1rem;
+    }
+
+    .clock-date {
+      font-size: 0.85rem;
+      color: var(--accent-yellow);
+    }
+
+    /* Major Project */
+    .major-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 2fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .major-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-yellow);
+      margin-bottom: 0.4rem;
+    }
+
+    .major-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .major-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .major-points {
+      font-size: 0.85rem;
+      color: var(--accent-white);
+    }
+
+    .major-points li {
+      margin-bottom: 0.35rem;
+    }
+
+    .major-preview {
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      background: linear-gradient(135deg, rgba(20, 184, 255, 0.25), rgba(5, 150, 105, 0.25));
+      padding: 0.85rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+    }
+
+    .major-preview-inner {
+      position: absolute;
+      inset: 12px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 0.8rem;
+    }
+
+    .major-nav {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .major-pill {
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .major-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .major-hero-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .major-hero-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .major-hero-btn {
+      margin-top: 0.3rem;
+      align-self: flex-start;
+      border-radius: 999px;
+      border: none;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
+      color: #020617;
+      font-weight: 500;
+      box-shadow: 0 8px 20px rgba(20, 184, 255, 0.35);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .major-hero-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(20, 184, 255, 0.5);
+    }
+
+    /* Contact Section */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.3fr) minmax(0, 2fr);
+      gap: 2rem;
+      margin-top: 1.8rem;
+    }
+
+    .contact-info-card,
+    .contact-form-card {
+      background: rgba(15, 23, 42, 0.97);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 1.4rem 1.3rem;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.95);
+    }
+
+    .contact-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-value {
+      font-size: 0.95rem;
+      color: var(--accent-white);
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-highlight {
+      font-size: 0.85rem;
+      color: var(--accent-yellow);
+      margin-top: 0.6rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    label {
+      color: var(--text-muted);
+    }
+
+    input,
+    textarea {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+      padding: 0.55rem 0.9rem;
+      font-size: 0.85rem;
+      color: var(--accent-white);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      font-family: inherit;
+    }
+
+    textarea {
+      border-radius: 16px;
+      min-height: 90px;
+      resize: vertical;
+      padding-top: 0.6rem;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 18px rgba(20, 184, 255, 0.6);
+      background: #020617;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 1.1rem 1.25rem 1.5rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .footer-inner span {
+      color: var(--accent-yellow);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero,
+      .about-grid,
+      .contact-layout,
+      .tictactoe-wrapper,
+      .major-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-card {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      nav ul {
+        gap: 0.8rem;
+        font-size: 0.8rem;
+      }
+      .nav-container {
+        padding-inline: 1rem;
+      }
+      main {
+        padding-inline: 1rem;
+      }
+      .cell {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .cell {
+        width: 60px;
+        height: 60px;
+      }
+      .modal-inner {
+        padding: 0.9rem;
+      }
+      .modal-body {
+        padding: 0.7rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="bg-glow"></div>
 
-<!-- ---------------- NAV ---------------- -->
-<nav>
-  <h1>My Portfolio</h1>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <!-- NAVBAR -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-logo">A</div>
+        <div>
+          <div class="brand-text-main">Akash</div>
+          <div class="brand-text-sub">Digital Portfolio</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<!-- ---------------- HOME ---------------- -->
-<section class="section" id="home">
-  <div class="hero">
-    <h2>Hi, I'm Akash</h2>
-    <p>Creative Developer • Designer • Animator</p>
+  <!-- MAIN -->
+  <main>
+    <!-- HOME -->
+    <section id="home" class="hero">
+      <div>
+        <div class="badge">
+          <div class="badge-dot"></div>
+          Ready for the next big opportunity
+        </div>
+        <h1 class="hero-title">
+          Hi, I'm <span>Akash</span> — building, learning,<br />and innovating every single day.
+        </h1>
+        <p class="hero-text">
+          A focused and curious learner who enjoys mixing strong fundamentals with practical,
+          hands-on projects. This portfolio is a snapshot of how I think, build and grow as a
+          student and a developer.
+        </p>
+        <p class="hero-highlight">
+          Passionate about both <strong>academic excellence</strong> and
+          <strong>real-world problem solving</strong> — with clear goals in technology,
+          innovation and continuous improvement.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
+            View My Projects
+          </button>
+          <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+            Contact Me
+          </button>
+        </div>
+      </div>
 
-    <!-- 3D Animation -->
-    <div class="cube">
-      <div class="front"></div>
-      <div class="back"></div>
-      <div class="right"></div>
-      <div class="left"></div>
-      <div class="top"></div>
-      <div class="bottom"></div>
+      <div class="hero-card">
+        <div class="hero-card-orbit"></div>
+        <div class="hero-card-tags">
+          <span class="tag">Dedicated Student</span>
+          <span class="tag">Problem Solver</span>
+          <span class="tag">Neon UI Lover</span>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-label">Mini Projects</div>
+            <div class="metric-value">04+</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Major Project</div>
+            <div class="metric-value">01</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Focus Areas</div>
+            <div class="metric-value">Web • Logic</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Goal</div>
+            <div class="metric-value">Innovation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">
+        A quick look at who I am, what drives me, and how I plan to grow in both academics
+        and technology.
+      </p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Who I Am</h3>
+          <p class="about-text">
+            <!-- TODO: update this paragraph with your real introduction -->
+            I am Akash, a student who believes that strong fundamentals, disciplined practice
+            and curiosity are the real superpowers. I enjoy understanding how things work from
+            the inside and then using that knowledge to create clean, practical solutions.
+          </p>
+
+          <ul class="about-list">
+            <!-- TODO: adjust these bullet points to match your real passions -->
+            <li><span>•</span> Passionate about <strong>web development</strong> and building interactive UIs.</li>
+            <li><span>•</span> Equally focused on <strong>academic performance</strong> and conceptual clarity.</li>
+            <li><span>•</span> Love structuring my work with <strong>clean, readable, and maintainable code</strong>.</li>
+            <li><span>•</span> Always open to <strong>feedback</strong> and improving my projects step by step.</li>
+          </ul>
+
+          <h3 style="margin-top: 1rem;">My Goals</h3>
+          <p class="about-text">
+            My short-term goal is to master modern web technologies and strengthen my problem-solving skills.
+            Long-term, I aim to contribute to meaningful projects that combine education, technology,
+            and real impact.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3>Growth & Innovation Journey</h3>
+          <p class="about-text">
+            I treat every project as a chance to learn something new — from logic building in
+            games like Tic Tac Toe to interactive UI elements such as sliders, calculators and clocks.
+          </p>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-title">Academic Excellence</div>
+              <div class="timeline-meta">
+                Staying consistent with my studies, focusing on understanding rather than memorizing.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">Hands-on Practice</div>
+              <div class="timeline-meta">
+                Building small but complete projects that are fully functional and user-friendly.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">Innovation Mindset</div>
+              <div class="timeline-meta">
+                Experimenting with UI, interactivity and experiences that feel premium and polished.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">Future Vision</div>
+              <div class="timeline-meta">
+                To work on larger systems and platforms where my code creates real-world value.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-subtitle">
+        Every project opens in a centered full-screen modal. Click to explore fully functional
+        mini apps and my major project.
+      </p>
+
+      <div class="projects-grid">
+        <div class="project-card" data-project="tic-tac-toe">
+          <div class="project-chip">Mini Project</div>
+          <div class="project-title">Tic Tac Toe</div>
+          <div class="project-desc">
+            A classic game built with clean logic and clear winner detection — demonstrating
+            control flow, conditions and state management.
+          </div>
+          <div class="project-open">
+            Open Project <span>↗</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="image-slider">
+          <div class="project-chip">Mini Project</div>
+          <div class="project-title">Neon Image Slider</div>
+          <div class="project-desc">
+            A smooth, fully functional slider that moves between different neon-themed panels
+            using JavaScript.
+          </div>
+          <div class="project-open">
+            Open Project <span>↗</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="calculator">
+          <div class="project-chip">Mini Project</div>
+          <div class="project-title">Smart Calculator</div>
+          <div class="project-desc">
+            A basic but powerful calculator that handles operations and expressions using
+            JavaScript.
+          </div>
+          <div class="project-open">
+            Open Project <span>↗</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="digital-clock">
+          <div class="project-chip">Mini Project</div>
+          <div class="project-title">Digital Clock</div>
+          <div class="project-desc">
+            A live, auto-updating digital clock displaying current time and date with a clean
+            neon layout.
+          </div>
+          <div class="project-open">
+            Open Project <span>↗</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="major-project">
+          <div class="project-chip">Major Project</div>
+          <div class="project-title">
+            <!-- TODO: replace with your real major project title -->
+            Gurukulam Hud & Nursery – Education Center Website
+          </div>
+          <div class="project-desc">
+            <!-- TODO: update this description to match your actual major project -->
+            A multi-page educational website concept focusing on courses, activities and a
+            clean experience for parents and students.
+          </div>
+          <div class="project-open">
+            Open Project <span>↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-subtitle">
+        If you’d like to know more about my work, projects or journey, feel free to reach out.
+      </p>
+
+      <div class="contact-layout">
+        <div class="contact-info-card">
+          <div class="contact-label">Primary Email</div>
+          <div class="contact-value">
+            <!-- TODO: replace with your real email -->
+            akash.example@email.com
+          </div>
+
+          <div class="contact-label">Availability</div>
+          <div class="contact-value">
+            Open for academic collaborations, project discussions and learning opportunities.
+          </div>
+
+          <div class="contact-label">What I Value</div>
+          <div class="contact-value">
+            Clear communication, honest feedback, and chances to build something meaningful.
+          </div>
+
+          <div class="contact-highlight">
+            Let’s build, learn and innovate together.
+          </div>
+        </div>
+
+        <div class="contact-form-card">
+          <form id="contactForm">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="Enter your name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="Enter your email" />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Write your message here"></textarea>
+            </div>
+            <button type="submit" class="btn-primary">
+              Submit Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>© <span>Akash</span> • All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" class="modal">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Project</div>
+        <button class="modal-close" id="modalClose" aria-label="Close project">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Tic Tac Toe -->
+        <div class="project-app" id="tic-tac-toe">
+          <div class="tictactoe-wrapper">
+            <div class="tictactoe-board" id="tictactoeBoard">
+              <div class="cell" data-cell-index="0"></div>
+              <div class="cell" data-cell-index="1"></div>
+              <div class="cell" data-cell-index="2"></div>
+              <div class="cell" data-cell-index="3"></div>
+              <div class="cell" data-cell-index="4"></div>
+              <div class="cell" data-cell-index="5"></div>
+              <div class="cell" data-cell-index="6"></div>
+              <div class="cell" data-cell-index="7"></div>
+              <div class="cell" data-cell-index="8"></div>
+            </div>
+            <div class="tictactoe-info">
+              <div class="status" id="tictactoeStatus">Current Player: X</div>
+              <p>
+                The goal is simple: get three in a row horizontally, vertically or diagonally.
+                This project shows how I handle game state, turn switching and winner checking.
+              </p>
+              <button class="btn-sm" id="tictactoeReset">Reset Game</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Slider -->
+        <div class="project-app" id="image-slider">
+          <div class="slider">
+            <div class="slider-window">
+              <div class="slide bg1 active">Slide One</div>
+              <div class="slide bg2">Slide Two</div>
+              <div class="slide bg3">Slide Three</div>
+              <div class="slide bg4">Slide Four</div>
+            </div>
+            <div class="slider-controls">
+              <div>Use the arrows to slide through neon panels.</div>
+              <div class="slider-buttons">
+                <button class="btn-icon" id="prevSlide" aria-label="Previous slide">⟵</button>
+                <button class="btn-icon" id="nextSlide" aria-label="Next slide">⟶</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculator -->
+        <div class="project-app" id="calculator">
+          <div class="calculator">
+            <div class="calc-display" id="calcDisplay">0</div>
+            <div class="calc-grid">
+              <button class="calc-btn operator" data-calc="C">C</button>
+              <button class="calc-btn operator" data-calc="DEL">DEL</button>
+              <button class="calc-btn operator" data-calc="%">%</button>
+              <button class="calc-btn operator" data-calc="/">÷</button>
+
+              <button class="calc-btn" data-calc="7">7</button>
+              <button class="calc-btn" data-calc="8">8</button>
+              <button class="calc-btn" data-calc="9">9</button>
+              <button class="calc-btn operator" data-calc="*">×</button>
+
+              <button class="calc-btn" data-calc="4">4</button>
+              <button class="calc-btn" data-calc="5">5</button>
+              <button class="calc-btn" data-calc="6">6</button>
+              <button class="calc-btn operator" data-calc="-">−</button>
+
+              <button class="calc-btn" data-calc="1">1</button>
+              <button class="calc-btn" data-calc="2">2</button>
+              <button class="calc-btn" data-calc="3">3</button>
+              <button class="calc-btn operator" data-calc="+">+</button>
+
+              <button class="calc-btn" data-calc="0">0</button>
+              <button class="calc-btn" data-calc=".">.</button>
+              <button class="calc-btn equal" data-calc="=">=</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Digital Clock -->
+        <div class="project-app" id="digital-clock">
+          <div class="clock-card">
+            <div class="clock-label">Live Digital Clock</div>
+            <div class="clock-time" id="clockTime">--:--:--</div>
+            <div class="clock-date" id="clockDate">Loading current date...</div>
+          </div>
+        </div>
+
+        <!-- Major Project -->
+        <div class="project-app" id="major-project">
+          <div class="major-grid">
+            <div>
+              <div class="major-tag">Major Project</div>
+              <div class="major-title">
+                <!-- TODO: replace with your major project title -->
+                Gurukulam Hud & Nursery – Education Center Website
+              </div>
+              <div class="major-meta">
+                <!-- TODO: adjust this text to describe your tech stack and goals -->
+                Concept website focused on giving parents, students and teachers a clean and
+                informative digital experience.
+              </div>
+              <ul class="major-points">
+                <li>• Multi-section layout for introduction, activities and contact details.</li>
+                <li>• Focus on clarity, readability and student-friendly visuals.</li>
+                <li>• Designed with blue and yellow educational theme in mind.</li>
+                <li>• Shows my ability to structure a complete website from scratch.</li>
+              </ul>
+            </div>
+            <div class="major-preview">
+              <div class="major-preview-inner">
+                <div class="major-nav">
+                  <div class="major-pill">Home</div>
+                  <div class="major-pill">Activities</div>
+                  <div class="major-pill">Admissions</div>
+                  <div class="major-pill">Contact</div>
+                </div>
+                <div class="major-hero">
+                  <div class="major-hero-title">Learning that feels like home.</div>
+                  <div class="major-hero-sub">
+                    A calm, student-friendly interface to explore classes, events and school
+                    culture – all in one place.
+                  </div>
+                  <button class="major-hero-btn" type="button">
+                    Simulated Demo View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of project-apps -->
+      </div>
     </div>
   </div>
-</section>
 
-<!-- ---------------- ABOUT ---------------- -->
-<section class="section" id="about">
-  <h2 style="color:#00eaff; text-shadow:0 0 20px cyan;">About Me</h2>
-  <div class="about-content">
-    <img src="c:\Users\akash kumar\OneDrive\Pictures\Documents\Programming\Javascript\akash image.jpg" alt="">
-    <p>
-      I'm a creative full-stack developer passionate about 3D animations,  
-      neon UI, premium design, and next-level colourful websites.  
-      I build modern digital experiences with motion, shadows and style.
-    </p>
-  </div>
-</section>
+  <script>
+    // ---------- PROJECT MODAL ----------
+    const modal = document.getElementById("projectModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalClose = document.getElementById("modalClose");
+    const projectCards = document.querySelectorAll(".project-card");
+    const projectApps = document.querySelectorAll(".project-app");
 
-<!-- ---------------- PROJECTS ---------------- -->
-<section class="section" id="projects">
-  <h2 style="color:#ff00ff; text-shadow:0 0 20px #ff00ff;"><br>My Projects</h2>
+    function openProject(projectId) {
+      projectApps.forEach((app) => app.classList.remove("active"));
+      const activeApp = document.getElementById(projectId);
+      if (activeApp) {
+        activeApp.classList.add("active");
+      }
+      // Set modal title
+      const card = Array.from(projectCards).find(
+        (c) => c.dataset.project === projectId
+      );
+      modalTitle.textContent = card
+        ? card.querySelector(".project-title").textContent
+        : "Project";
+      modal.classList.add("show");
+    }
 
-  <div class="projects">
-    <div class="project-card">
-      <h3> calculater</h3>
-      <p></p>
-       <a href="file:///C:/Users/akash%20kumar/OneDrive/Desktop/akashh/calculater.html">calculater</a>
-    </div>
-      
-    </div>
+    function closeModal() {
+      modal.classList.remove("show");
+      projectApps.forEach((app) => app.classList.remove("active"));
+    }
 
-    <div class="project-card">
-      <h3>Digital Clock</h3>
-      <p> </p>
-      <a href="file:///C:/Users/akash%20kumar/OneDrive/Desktop/akashh/clockdeee.html">clock</a>
-    </div>
+    projectCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const projectId = card.dataset.project;
+        openProject(projectId);
+      });
+    });
 
-    <div class="project-card">
-      <h3></h3>
-      <p>3D stylish clock built using JS.</p>
-      <a href=""></a>
-    </div>
-  </div>
-</section>
+    modalClose.addEventListener("click", closeModal);
 
-<!-- ---------------- CONTACT ---------------- -->
-<section class="section" id="contact">
-  <h2 style="color:#00eaff; text-shadow:0 0 20px cyan;">Contact Me</h2>
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
 
-  <div class="contact">
-    <form onsubmit="sendMsg(event)">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" rows="5"></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-</section>
+    // ---------- TIC TAC TOE ----------
+    const tictactoeBoard = document.getElementById("tictactoeBoard");
+    const tictactoeStatus = document.getElementById("tictactoeStatus");
+    const tictactoeReset = document.getElementById("tictactoeReset");
+    let tictactoeState = Array(9).fill("");
+    let currentPlayer = "X";
+    let isGameActive = true;
 
-<script>
-function sendMsg(e){
-  e.preventDefault();
-  alert("Message Sent Successfully!");
-}
-</script>
+    const winningConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
 
+    function updateStatus(message) {
+      tictactoeStatus.textContent = message;
+    }
+
+    function handleCellClick(event) {
+      const cell = event.target;
+      const cellIndex = cell.getAttribute("data-cell-index");
+
+      if (!isGameActive || tictactoeState[cellIndex] !== "") return;
+
+      tictactoeState[cellIndex] = currentPlayer;
+      cell.textContent = currentPlayer;
+
+      checkResult();
+    }
+
+    function checkResult() {
+      let roundWon = false;
+
+      for (let i = 0; i < winningConditions.length; i++) {
+        const [a, b, c] = winningConditions[i];
+        const valA = tictactoeState[a];
+        const valB = tictactoeState[b];
+        const valC = tictactoeState[c];
+
+        if (valA === "" || valB === "" || valC === "") {
+          continue;
+        }
+        if (valA === valB && valB === valC) {
+          roundWon = true;
+          break;
+        }
+      }
+
+      if (roundWon) {
+        updateStatus(Winner: ${currentPlayer});
+        isGameActive = false;
+        return;
+      }
+
+      if (!tictactoeState.includes("")) {
+        updateStatus("It's a draw!");
+        isGameActive = false;
+        return;
+      }
+
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      updateStatus(Current Player: ${currentPlayer});
+    }
+
+    function resetGame() {
+      tictactoeState = Array(9).fill("");
+      currentPlayer = "X";
+      isGameActive = true;
+      document
+        .querySelectorAll("#tictactoeBoard .cell")
+        .forEach((cell) => (cell.textContent = ""));
+      updateStatus(Current Player: ${currentPlayer});
+    }
+
+    tictactoeBoard.addEventListener("click", (event) => {
+      if (event.target.classList.contains("cell")) {
+        handleCellClick(event);
+      }
+    });
+
+    tictactoeReset.addEventListener("click", resetGame);
+
+    // ---------- IMAGE SLIDER ----------
+    const slides = document.querySelectorAll(".slide");
+    const prevSlide = document.getElementById("prevSlide");
+    const nextSlide = document.getElementById("nextSlide");
+    let currentSlideIndex = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+    }
+
+    function next() {
+      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+      showSlide(currentSlideIndex);
+    }
+
+    function prev() {
+      currentSlideIndex =
+        (currentSlideIndex - 1 + slides.length) % slides.length;
+      showSlide(currentSlideIndex);
+    }
+
+    nextSlide.addEventListener("click", next);
+    prevSlide.addEventListener("click", prev);
+
+    // ---------- CALCULATOR ----------
+    const calcDisplay = document.getElementById("calcDisplay");
+    const calcButtons = document.querySelectorAll(".calc-btn");
+    let calcCurrent = "0";
+
+    function updateCalcDisplay() {
+      calcDisplay.textContent = calcCurrent || "0";
+    }
+
+    function handleCalcInput(value) {
+      if (value === "C") {
+        calcCurrent = "0";
+        updateCalcDisplay();
+        return;
+      }
+
+      if (value === "DEL") {
+        calcCurrent = calcCurrent.slice(0, -1) || "0";
+        updateCalcDisplay();
+        return;
+      }
+
+      if (value === "=") {
+        try {
+          const expression = calcCurrent.replace(/÷/g, "/").replace(/×/g, "*");
+          const result = eval(expression); // Using eval carefully for this controlled calculator
+          calcCurrent = String(result);
+        } catch (e) {
+          calcCurrent = "Error";
+        }
+        updateCalcDisplay();
+        return;
+      }
+
+      if (calcCurrent === "0" && value !== ".") {
+        calcCurrent = value;
+      } else {
+        calcCurrent += value;
+      }
+      updateCalcDisplay();
+    }
+
+    calcButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const value = btn.getAttribute("data-calc");
+        handleCalcInput(value);
+      });
+    });
+
+    // ---------- DIGITAL CLOCK ----------
+    const clockTime = document.getElementById("clockTime");
+    const clockDate = document.getElementById("clockDate");
+
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      clockTime.textContent = ${hours}:${minutes}:${seconds};
+
+      const options = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
+      clockDate.textContent = now.toLocaleDateString(undefined, options);
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ---------- CONTACT FORM ----------
+    const contactForm = document.getElementById("contactForm");
+
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in your name, email and message before submitting.");
+        return;
+      }
+
+      alert(
+        Thank you, ${name}! Your message has been recorded. I will get back to you at ${email}.
+      );
+      contactForm.reset();
+    });
+
+    // ---------- SMALL UX TOUCH: ESC KEY CLOSE ----------
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("show")) {
+        closeModal();
+      }
+    });
+  </script>
 </body>
 </html>
